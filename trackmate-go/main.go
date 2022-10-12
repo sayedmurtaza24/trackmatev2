@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	viper.AddConfigPath(".env")
+	viper.SetConfigFile(".env")
+
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
@@ -17,7 +18,7 @@ func main() {
 	dbUrl := viper.Get("DATABASE_URL").(string)
 
 	app := fiber.New()
-	db := database.GetDB(dbUrl)
+	database.GetDB(dbUrl)
 	err := app.Listen(":3000")
 
 	if err != nil {
