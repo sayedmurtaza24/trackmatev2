@@ -1,11 +1,28 @@
 package auth
 
-import "log"
+import (
+	"time"
 
-func (h *AuthHandler) handleSignIn() {
+	"github.com/gofiber/fiber/v2"
+)
 
-	token, err := h.FirebaseAuth.VerifyIDToken(h.FiberCtx, idToken)
-	if err != nil {
-		log.Fatalf("error verifying ID token: %v\n", err)
+type LoginSchemaIn struct {
+	IDToken string `json:"id_token"`
+}
+
+func (h *AuthHandler) handleSignIn(c *fiber.Ctx) error {
+	var loginSchema LoginSchemaIn
+	if err := c.BodyParser(&loginSchema); err != nil {
+		return c.SendStatus(403)
 	}
+
+	sessionToken, err := h.FirebaseAuth.SessionCookie(c.Context(), loginSchema.IDToken, 24*60*60*3*time.Second)
+
+	if err != nil {
+		return c.SendStatus(403)
+	}
+
+	c.Cookie(&fiber.Cookie{Name: "Authorization", Value: "Bearer " + sessionToken})
+
+	return c.SendStatus(200)
 }

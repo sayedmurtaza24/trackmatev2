@@ -7,5 +7,14 @@ import (
 
 type AuthHandler struct {
 	FirebaseAuth *auth.Client
-	FiberCtx     *fiber.Ctx
+}
+
+func RegisterRoute(app *fiber.App, auth *auth.Client) {
+	h := AuthHandler{
+		FirebaseAuth: auth,
+	}
+
+	r := app.Group("/api/auth")
+
+	r.Post("/login", h.handleSignIn)
 }

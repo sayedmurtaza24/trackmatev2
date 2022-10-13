@@ -10,7 +10,11 @@ require (
 	cloud.google.com/go/firestore v1.6.1 // indirect
 	cloud.google.com/go/iam v0.5.0 // indirect
 	cloud.google.com/go/storage v1.23.0 // indirect
+	github.com/0xAX/notificator v0.0.0-20220220101646-ee9b8921e557 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/codegangsta/envy v0.0.0-20141216192214-4b78388c8ce4 // indirect
+	github.com/codegangsta/gin v0.0.0-20211113050330-71f90109db02 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gofiber/fiber/v2 v2.38.1 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -33,15 +37,19 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.15.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
+	github.com/mattn/go-shellwords v1.0.12 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
+	github.com/russross/blackfriday/v2 v2.0.1 // indirect
+	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.13.0 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
+	github.com/urfave/cli v1.22.10 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.40.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
