@@ -7,7 +7,9 @@ import (
 	"firebase.google.com/go/auth"
 	"github.com/gofiber/fiber/v2"
 	authC "github.com/sayedmurtaza24/trackmatev2/api/auth"
+	"github.com/sayedmurtaza24/trackmatev2/api/classes"
 	"github.com/sayedmurtaza24/trackmatev2/api/students"
+	"github.com/sayedmurtaza24/trackmatev2/api/teachers"
 	"github.com/sayedmurtaza24/trackmatev2/database"
 	"github.com/sayedmurtaza24/trackmatev2/firebase"
 	"github.com/spf13/viper"
@@ -63,6 +65,8 @@ func main() {
 	app.Use(authMiddleware(authClient))
 
 	students.RegisterRoute(app, db)
+	teachers.RegisterRoute(app, db)
+	classes.RegisterRoute(app, db)
 
 	err := app.Listen(":3000")
 
