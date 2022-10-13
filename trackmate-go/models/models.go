@@ -4,10 +4,10 @@ import "time"
 
 type AssessmentField struct {
 	ID           uint       `json:"id" gorm:"primaryKey"`
-	AssessmentID uint       `json:"assessment_id"`
-	Assessment   Assessment `json:"-"`
 	Value        uint       `json:"value"`
 	Comment      string     `json:"comment"`
+	AssessmentID uint       `json:"-"`
+	Assessment   Assessment `json:"-"`
 }
 
 type Assessment struct {
