@@ -20,4 +20,7 @@ func RegisterRoute(app *fiber.App, db *gorm.DB) {
 	r := app.Group("/api/students")
 
 	r.Post("/", h.handleCreateStudent)
+	r.Get("/:id", h.handleGetStudent)
+	r.Delete("/:id", h.handleDeleteStudent)
+	r.Put("/:id", h.handleUpdateStudent)
 }

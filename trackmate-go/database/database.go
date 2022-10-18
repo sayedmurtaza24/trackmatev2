@@ -23,7 +23,7 @@ func GetDB(dbUrl string) *gorm.DB {
 
 	//this will create tables for user, products and orders
 	// db.Migrator().DropTable(&models.Teacher{})
-	db.AutoMigrate(&models.Student{}, &models.Teacher{}, &models.Class{})
+	db.AutoMigrate(&models.Student{}, &models.Teacher{}, &models.Class{}, &models.Assessment{}, &models.AssessmentField{})
 
 	return db
 }
