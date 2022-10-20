@@ -33,7 +33,6 @@ func authMiddleware(a *auth.Client) func(*fiber.Ctx) error {
 		}
 
 		user, err := a.GetUser(c.Context(), token.UID)
-
 		if err != nil {
 			return c.SendStatus(403)
 		}

@@ -1,6 +1,8 @@
 package query
 
 import (
+	"errors"
+
 	"github.com/sayedmurtaza24/trackmatev2/models"
 	"gorm.io/gorm"
 )
@@ -17,7 +19,7 @@ func (query ClassQueryI) CreateClass(ClassName string, TeacherEmail string) (mod
 		return class, db.Error
 	}
 
-	class.TeacherID = int(teacher.ID)
+	class.TeacherID = uint(teacher.ID)
 
 	if db := query.DB.Create(&class); db.Error != nil {
 		return class, db.Error
@@ -26,13 +28,21 @@ func (query ClassQueryI) CreateClass(ClassName string, TeacherEmail string) (mod
 	return class, nil
 }
 
-func (query ClassQueryI) GetClass(ID uint, TeacherEmail string) (models.Class, error) {
+func (query ClassQueryI) GetClass(ID uint, TeacherEmail string) (*models.Class, error) {
 	class := models.Class{}
 
 	if db :=
-		query.DB.Preload("Students").Find(&class); db.Error != nil {
-		return class, db.Error
+		query.DB.
+			Preload("Students").
+			Where("classes.id = ?", ID).
+			Joins("Teacher", query.DB.Where(&models.Teacher{Email: TeacherEmail})).
+			Find(&class); db.Error != nil {
+		return &class, db.Error
 	}
 
-	return class, nil
+	if class.ID == 0 {
+		return &class, errors.New("No class found")
+	}
+
+	return &class, nil
 }

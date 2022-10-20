@@ -13,27 +13,29 @@ type AssessmentField struct {
 type Assessment struct {
 	ID        uint              `json:"id" gorm:"primaryKey"`
 	Date      time.Time         `json:"date"`
-	Fields    []AssessmentField `json:"fields"`
+	Fields    []AssessmentField `json:"fields,omitempty"`
 	StudentID uint              `json:"-"`
 	Student   Student           `json:"-"`
 }
 
 type Student struct {
-	ID          uint         `json:"id" gorm:"primaryKey"`
-	FirstName   string       `json:"first_name"`
-	LastName    string       `json:"last_name"`
-	Dob         time.Time    `json:"dob"`
-	Gender      string       `json:"gender"`
-	Assessments []Assessment `json:"assessments"`
-	ClassID     uint         `json:"-"`
-	Class       Class        `json:"-"`
+	ID             uint         `json:"id" gorm:"primaryKey"`
+	FirstName      string       `json:"first_name"`
+	LastName       string       `json:"last_name"`
+	Dob            time.Time    `json:"dob"`
+	Gender         string       `json:"gender"`
+	GuardianEmail  string       `json:"guardian_email"`
+	GuardianNumber string       `json:"guardian_no"`
+	Assessments    []Assessment `json:"assessments,omitempty"`
+	ClassID        uint         `json:"-"`
+	Class          Class        `json:"-"`
 }
 
 type Class struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`
 	ClassName string    `json:"class_name"`
-	Students  []Student `json:"students"`
-	TeacherID int       `json:"-"`
+	Students  []Student `json:"students,omitempty"`
+	TeacherID uint      `json:"-"`
 	Teacher   Teacher   `json:"-"`
 }
 
@@ -42,5 +44,5 @@ type Teacher struct {
 	FirstName string  `json:"first_name"`
 	LastName  string  `json:"last_name"`
 	Email     string  `json:"email" gorm:"unique"`
-	Classes   []Class `json:"classes"`
+	Classes   []Class `json:"classes,omitempty"`
 }

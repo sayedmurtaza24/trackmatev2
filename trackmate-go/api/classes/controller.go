@@ -20,5 +20,5 @@ func RegisterRoute(app *fiber.App, db *gorm.DB) {
 	r := app.Group("/api/classes")
 
 	r.Post("/", h.handleCreateClass)
-	// r.Get("/", h.handleGetClass)
+	r.Get("/:id", h.handleGetClass)
 }
