@@ -1,17 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { signIn } from "./firebase";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle"
-import Logo from "./components/Logo";
-import Button from './components/Button';
+import LoginScreen from "./components/Login/LoginScreen";
+import { AnimatedBackgroundColorView } from "react-native-animated-background-color-view";
 
 export default function App() {
   return (
-    <View style={styles.homeScreen}>
-      <Logo />
-      <Button title="Sign in" onPress={signIn} icon={faGoogle} />
+    <AnimatedBackgroundColorView
+      color="#e7feff"
+      initialColor="white"
+      style={styles.homeScreen}
+    >
+      <LoginScreen />
       <StatusBar style="auto" />
-    </View>
+    </AnimatedBackgroundColorView>
   );
 }
 
@@ -21,5 +22,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
 });

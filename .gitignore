@@ -1,3 +1,4 @@
 firebase-config.json
 node_modules/
 trackmate-native/firebase.js
+.expo/
