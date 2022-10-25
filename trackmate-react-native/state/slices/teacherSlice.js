@@ -3,6 +3,7 @@ import teacherBloc from "../bloc/teacherBloc";
 
 const initialState = {
   currentTeacher: null,
+  firstSignIn: false
 };
 
 export const getTeacherAction = createAsyncThunk("getTeacher", async () => {
@@ -24,6 +25,10 @@ const teacherSlice = createSlice({
   extraReducers: {
     [getTeacherAction.fulfilled]: (state, action) => {
       state.currentTeacher = action.payload;
+      state.firstSignIn = false;
+    },
+    [getTeacherAction.rejected]: (state, action) => {
+      state.firstSignIn = true;
     },
     [createTeacherAction.fulfilled]: (state, action) => {
       state.currentTeacher = action.payload

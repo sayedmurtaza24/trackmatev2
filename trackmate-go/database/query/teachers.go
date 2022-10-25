@@ -1,6 +1,8 @@
 package query
 
 import (
+	"errors"
+
 	"github.com/sayedmurtaza24/trackmatev2/models"
 	"gorm.io/gorm"
 )
@@ -24,6 +26,10 @@ func (query TeacherQueryI) GetTeacher(Email string) (models.Teacher, error) {
 
 	if db := query.DB.Preload("Classes").Find(&teacher); db.Error != nil {
 		return teacher, db.Error
+	}
+
+	if teacher.ID == 0 {
+		return teacher, errors.New("Teacher not found")
 	}
 
 	return teacher, nil

@@ -24,5 +24,5 @@ func (h *AuthHandler) handleSignIn(c *fiber.Ctx) error {
 
 	c.Cookie(&fiber.Cookie{Name: "Authorization", Value: "Bearer " + sessionToken})
 
-	return c.SendStatus(200)
+	return c.Status(200).JSON(map[string]string{"token": sessionToken})
 }

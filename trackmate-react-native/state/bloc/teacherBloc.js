@@ -1,5 +1,5 @@
 import { baseUrl } from "../config";
-import httpClient from './httpClient';
+import httpClient from '../http';
 
 export default (function () {
   const basePath = baseUrl + "/api/teachers"

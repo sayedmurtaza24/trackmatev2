@@ -6,6 +6,7 @@ import (
 
 	"firebase.google.com/go/auth"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	authC "github.com/sayedmurtaza24/trackmatev2/api/auth"
 	"github.com/sayedmurtaza24/trackmatev2/api/classes"
 	"github.com/sayedmurtaza24/trackmatev2/api/students"
@@ -43,9 +44,6 @@ func authMiddleware(a *auth.Client) func(*fiber.Ctx) error {
 	}
 }
 
-// /api/students
-// request authorization => middleware processes it => studentHandler
-
 func main() {
 	viper.SetConfigFile(".env")
 
@@ -58,6 +56,13 @@ func main() {
 	app := fiber.New()
 	db := database.GetDB(dbUrl)
 	authClient := firebase.InitAuth()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:19006",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowMethods:     "GET,POST,DELETE,PATCH,PUT",
+		AllowCredentials: true,
+	}))
 
 	authC.RegisterRoute(app, authClient)
 
