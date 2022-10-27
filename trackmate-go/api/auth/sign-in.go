@@ -7,7 +7,7 @@ import (
 )
 
 type LoginSchemaIn struct {
-	IDToken string `json:"idToken"`
+	IDToken string `json:"idToken" validate:"required,jwt"`
 }
 
 func (h *AuthHandler) handleSignIn(c *fiber.Ctx) error {

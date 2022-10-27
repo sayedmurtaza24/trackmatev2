@@ -5,8 +5,8 @@ import (
 )
 
 type CreateTeacherSchemaI struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	FirstName string `json:"firstName" validate:"required,alpha,min=2,max=24"`
+	LastName  string `json:"lastName" validate:"required,alpha,min=2,max=24"`
 }
 
 func (h TeacherHandler) handleCreateTeacher(c *fiber.Ctx) error {

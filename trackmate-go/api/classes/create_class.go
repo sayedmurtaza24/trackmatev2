@@ -5,7 +5,7 @@ import (
 )
 
 type CreateClassSchemaI struct {
-	ClassName string `json:"class_name"`
+	ClassName string `json:"className" validate:"required,alphanum"`
 }
 
 func (h ClassHandler) handleCreateClass(c *fiber.Ctx) error {

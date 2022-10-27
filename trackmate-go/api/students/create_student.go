@@ -7,10 +7,10 @@ import (
 )
 
 type CreateStudentSchemaI struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	FirstName string `json:"firstName" validate:"required,alpha,min=2,max=24"`
+	LastName  string `json:"lastName" validate:"required,alpha,min=2,max=24"`
 	Dob       string `json:"dob"`
-	Gender    string `json:"gender"`
+	Gender    string `json:"gender" validate:"required,alpha,min=2,max=10"`
 }
 
 func (h StudentHandler) handleCreateStudent(c *fiber.Ctx) error {

@@ -7,12 +7,12 @@ import (
 )
 
 type UpdateStudentSchemaI struct {
-	FirstName      string `json:"first_name"`
-	LastName       string `json:"last_name"`
+	FirstName      string `json:"firstName" validate:"required,alpha,min=2,max=24"`
+	LastName       string `json:"lastName" validate:"required,alpha,min=2,max=24"`
 	Dob            string `json:"dob"`
-	Gender         string `json:"gender"`
-	GuardianEmail  string `json:"guardian_email"`
-	GuardianNumber string `json:"guardian_no"`
+	Gender         string `json:"gender" validate:"required,alpha,min=2,max=10"`
+	GuardianEmail  string `json:"guardianEmail" validate:"email"`
+	GuardianNumber string `json:"guardianNo" validate:"e164"`
 }
 
 func (h StudentHandler) handleUpdateStudent(c *fiber.Ctx) error {
