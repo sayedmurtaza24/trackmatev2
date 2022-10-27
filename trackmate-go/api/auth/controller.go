@@ -17,4 +17,5 @@ func RegisterRoute(app *fiber.App, auth *auth.Client) {
 	r := app.Group("/api/auth")
 
 	r.Post("/login", h.handleSignIn)
+	r.Post("/logout", h.handleLogout)
 }

@@ -20,12 +20,12 @@ type Assessment struct {
 
 type Student struct {
 	ID             uint         `json:"id" gorm:"primaryKey"`
-	FirstName      string       `json:"first_name"`
-	LastName       string       `json:"last_name"`
+	FirstName      string       `json:"firstName"`
+	LastName       string       `json:"lastName"`
 	Dob            time.Time    `json:"dob"`
 	Gender         string       `json:"gender"`
-	GuardianEmail  string       `json:"guardian_email"`
-	GuardianNumber string       `json:"guardian_no"`
+	GuardianEmail  string       `json:"guardianEmail"`
+	GuardianNumber string       `json:"guardianNumber"`
 	Assessments    []Assessment `json:"assessments,omitempty"`
 	ClassID        uint         `json:"-"`
 	Class          Class        `json:"-"`
@@ -33,7 +33,7 @@ type Student struct {
 
 type Class struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`
-	ClassName string    `json:"class_name"`
+	ClassName string    `json:"className"`
 	Students  []Student `json:"students,omitempty"`
 	TeacherID uint      `json:"-"`
 	Teacher   Teacher   `json:"-"`
@@ -41,8 +41,8 @@ type Class struct {
 
 type Teacher struct {
 	ID        uint    `json:"id" gorm:"primaryKey"`
-	FirstName string  `json:"first_name"`
-	LastName  string  `json:"last_name"`
+	FirstName string  `json:"firstName"`
+	LastName  string  `json:"lastName"`
 	Email     string  `json:"email" gorm:"unique"`
 	Classes   []Class `json:"classes,omitempty"`
 }

@@ -16,11 +16,7 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }} >
         {isLoggedIn ? (
           <>
             <Stack.Screen name="Overview" component={Overview} />
@@ -31,6 +27,6 @@ export default function Navigation() {
         )}
       </Stack.Navigator>
       <StatusBar style="auto" />
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }

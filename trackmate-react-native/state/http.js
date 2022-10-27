@@ -2,14 +2,8 @@ const isDevelopment = process.env.NODE_ENV === "development";
 
 const authorizationHeader = () => localStorage.getItem("token");
 
-async function makeRequest(
-  method,
-  url,
-  { customHeaders, body, includeCredentials = true } = {}
-) {
-  const authHeaders = isDevelopment
-    ? { Authorization: "Bearer " + authorizationHeader() }
-    : {};
+async function makeRequest(method, url, { customHeaders, body, includeCredentials = true } = {}) {
+  const authHeaders = isDevelopment ? { Authorization: "Bearer " + authorizationHeader() } : {};
   const res = await fetch(url, {
     credentials: includeCredentials ? "include" : "omit",
     headers: {

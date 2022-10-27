@@ -7,7 +7,7 @@ import (
 )
 
 type LoginSchemaIn struct {
-	IDToken string `json:"id_token"`
+	IDToken string `json:"idToken"`
 }
 
 func (h *AuthHandler) handleSignIn(c *fiber.Ctx) error {
@@ -24,5 +24,6 @@ func (h *AuthHandler) handleSignIn(c *fiber.Ctx) error {
 
 	c.Cookie(&fiber.Cookie{Name: "Authorization", Value: "Bearer " + sessionToken})
 
+	// TODO: token sent for development purposes only -- remove on production
 	return c.Status(200).JSON(map[string]string{"token": sessionToken})
 }

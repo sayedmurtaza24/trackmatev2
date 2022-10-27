@@ -10,8 +10,8 @@ export const getTeacherAction = createAsyncThunk("getTeacher", async () => {
   return await teacherBloc.getTeacher();
 });
 
-export const createTeacherAction = createAsyncThunk("createTeacher", async name => {
-  return await teacherBloc.signupTeacher(name);
+export const createTeacherAction = createAsyncThunk("createTeacher", async ({ firstName, lastName }) => {
+  return await teacherBloc.signupTeacher({ firstName, lastName });
 });
 
 const teacherSlice = createSlice({
@@ -32,6 +32,7 @@ const teacherSlice = createSlice({
     },
     [createTeacherAction.fulfilled]: (state, action) => {
       state.currentTeacher = action.payload
+      state.firstSignIn = false;
     },
   },
 });

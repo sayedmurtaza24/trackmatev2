@@ -2,9 +2,7 @@ package main
 
 import (
 	"log"
-	"strings"
 
-	"firebase.google.com/go/auth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	authC "github.com/sayedmurtaza24/trackmatev2/api/auth"
@@ -15,34 +13,6 @@ import (
 	"github.com/sayedmurtaza24/trackmatev2/firebase"
 	"github.com/spf13/viper"
 )
-
-func authMiddleware(a *auth.Client) func(*fiber.Ctx) error {
-	return func(c *fiber.Ctx) error {
-		authHeader := c.Get("Authorization")
-		if len(authHeader) == 0 {
-			return c.SendStatus(403)
-		}
-
-		authSplit := strings.Split(authHeader, " ")
-		if len(authSplit) != 2 {
-			return c.SendStatus(403)
-		}
-
-		token, err := a.VerifySessionCookie(c.Context(), authSplit[1])
-		if err != nil {
-			return c.SendStatus(403)
-		}
-
-		user, err := a.GetUser(c.Context(), token.UID)
-		if err != nil {
-			return c.SendStatus(403)
-		}
-
-		c.Locals("Email", user.Email)
-
-		return c.Next()
-	}
-}
 
 func main() {
 	viper.SetConfigFile(".env")
@@ -64,10 +34,9 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	app.Use(authC.AuthMiddleware(authClient))
+
 	authC.RegisterRoute(app, authClient)
-
-	app.Use(authMiddleware(authClient))
-
 	students.RegisterRoute(app, db)
 	teachers.RegisterRoute(app, db)
 	classes.RegisterRoute(app, db)

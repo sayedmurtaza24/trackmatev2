@@ -1,15 +1,31 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useEffect } from "react";
+import { StatusBar } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from "react-redux";
+import { createTeacherAction } from "../state/slices/teacherSlice";
 import Logo from "../components/Logo";
 import Separator from "../components/Separator";
 import Button from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "react-native";
-import React from "react";
 
 export default function Signup() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const currentTeacher = useSelector(store => store.teacher.currentTeacher)
 
-  const [input, onChangeInput] = React.useState(input);
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+
+  const signup = () => {
+    dispatch(createTeacherAction({ firstName, lastName }));
+  }
+
+  useEffect(() => {
+    if (currentTeacher) {
+      navigation.replace("Overview")
+    }
+  }, [currentTeacher])
 
   return (
     <View style={styles.signupView}>
@@ -17,15 +33,25 @@ export default function Signup() {
       <Separator height={30} />
       <TextInput
         style={styles.input}
-        onChangeText={onChangeInput}
-        value={input}
-        placeholder="your name..."
-        keyboardType="numeric"
+        onChangeText={setFirstName}
+        value={firstName}
+        placeholder="First Name"
+        placeholderTextColor="#aaa"
+      />
+      <Separator height={30} />
+      <TextInput
+        style={styles.input}
+        onChangeText={setLastName}
+        value={lastName}
+        placeholder="Last Name"
+        placeholderTextColor="#aaa"
       />
       <Separator height={30} />
       <Button
         title="Get started"
-        onPress={() => navigation.navigate("Overview")}
+        icon={faArrowRight}
+        iconPosition="right"
+        onPress={signup}
       />
       <StatusBar style="auto" />
     </View>

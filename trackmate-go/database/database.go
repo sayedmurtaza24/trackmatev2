@@ -21,9 +21,13 @@ func GetDB(dbUrl string) *gorm.DB {
 	db.Logger = logger.Default.LogMode(logger.Info)
 	log.Println("Running migrations")
 
-	//this will create tables for user, products and orders
-	// db.Migrator().DropTable(&models.Teacher{})
-	db.AutoMigrate(&models.Student{}, &models.Teacher{}, &models.Class{}, &models.Assessment{}, &models.AssessmentField{})
+	db.AutoMigrate(
+		&models.Student{},
+		&models.Teacher{},
+		&models.Class{},
+		&models.Assessment{},
+		&models.AssessmentField{},
+	)
 
 	return db
 }

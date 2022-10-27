@@ -1,14 +1,12 @@
 import { baseUrl } from "../config";
 import httpClient from '../http';
 
-export default (function () {
-  const basePath = baseUrl + "/api/teachers"
-  return {
-    getTeacher: () => {
-      return httpClient.get(basePath);
-    },
-    signupTeacher: name => {
-      return httpClient.post(basePath, { body: { name } });
-    },
-  };
-})();
+const basePath = baseUrl + "/api/teachers"
+export default {
+  getTeacher: () => {
+    return httpClient.get(basePath);
+  },
+  signupTeacher: ({ firstName, lastName }) => {
+    return httpClient.post(basePath, { body: { first_name: firstName, last_name: lastName } });
+  },
+};
