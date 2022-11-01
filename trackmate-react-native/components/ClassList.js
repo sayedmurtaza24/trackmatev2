@@ -33,7 +33,7 @@ const ClassList = () => {
   );
 };
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   root: {
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   list: {
-    height: windowHeight - 250
-  }
+    height: windowHeight - 250,
+  },
 });
 
 export default ClassList;
