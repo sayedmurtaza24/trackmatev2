@@ -1,41 +1,79 @@
 import { TouchableHighlight, View, Text, StyleSheet } from "react-native";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import Separator from './Separator'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Separator from "./Separator";
 
-export default function Button({ onPress, title, icon, iconPosition = "left" }) {
-    return (
-        <TouchableHighlight onPress={onPress}>
-            <View style={styles.button}>
-                {iconPosition === "left" && (
-                    <>
-                        <FontAwesomeIcon color="white" size={18} icon={icon} />
-                        <Separator width={10} />
-                    </>
-                )}
-                {!!title && <Text style={styles.title}>{title}</Text>}
-                {iconPosition === "right" && (
-                    <>
-                        <Separator width={10} />
-                        <FontAwesomeIcon color="white" size={18} icon={icon} />
-                    </>
-                )}
-            </View>
-        </TouchableHighlight>
-    );
+export const IconPosition = Object.freeze({
+  RIGHT: "right",
+  LEFT: "left",
+});
+
+export const ButtonStyle = Object.freeze({
+  SOLID: "solid",
+  TRANSPARENT: "transparent",
+});
+
+export const ButtonShape = Object.freeze({
+  ROUNDED: "rounded",
+  RECTANGULAR: "rectangular",
+});
+
+export default function Button({
+  onPress,
+  title,
+  icon,
+  iconPosition = IconPosition.LEFT,
+  buttonStyle = ButtonStyle.SOLID,
+  buttonShape = ButtonShape.RECTANGULAR,
+  width,
+  height,
+}) {
+  const textIconColor = buttonStyle === ButtonStyle.SOLID ? "white" : "#187dc9";
+  const highlightColor =
+    buttonStyle === ButtonStyle.SOLID ? "#3297e3" : "#ececec";
+  const bgColor = buttonStyle === ButtonStyle.SOLID ? "#187dc9" : "transparent";
+
+  return (
+    <TouchableHighlight
+      style={{
+        backgroundColor: bgColor,
+        width,
+        height,
+        borderRadius: buttonShape === ButtonShape.ROUNDED ? "50%" : "0",
+      }}
+      underlayColor={highlightColor}
+      onPress={onPress}
+    >
+      <View style={{ ...styles.button }}>
+        {iconPosition === "left" && (
+          <>
+            {icon && <FontAwesomeIcon color={textIconColor} size={18} icon={icon} />}
+            {title && <Separator width={10} />}
+          </>
+        )}
+        {!!title && (
+          <Text style={{ ...styles.title, color: textIconColor }}>{title}</Text>
+        )}
+        {iconPosition === "right" && (
+          <>
+            {title && <Separator width={10} />}
+            {icon && <FontAwesomeIcon color={textIconColor} size={18} icon={icon} />}
+          </>
+        )}
+      </View>
+    </TouchableHighlight>
+  );
 }
 
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: "#187dc9",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    title: {
-        fontSize: 18,
-        color: 'white'
-    }
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    display: "flex",
+    flexDirection: "row",
+  },
+  title: {
+    fontSize: 18,
+  },
 });

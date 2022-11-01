@@ -4,7 +4,7 @@ import trackmateLogo from '../assets/trackmateLogo.png'
 
 export default function Logo() {
   return (
-    <View>
+    <View style={styles.root}>
       <Image
         style={styles.logo}
         source={trackmateLogo}
@@ -14,6 +14,13 @@ export default function Logo() {
 }
 
 const styles = StyleSheet.create({
+  root: {
+    paddingTop: 20,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
   logo: {
     width: 246,
     height: 58,

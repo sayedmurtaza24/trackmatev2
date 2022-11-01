@@ -9,7 +9,8 @@ export default {
     const res = await httpClient.post(`${basePath}/login`, { body: { idToken } });
     if (isDevelopment) localStorage.setItem('token', res.token);
   },
-  logout: () => {
-    return httpClient.post(`${basePath}/logout`);
+  logout: async () => {
+    await httpClient.post(`${basePath}/logout`);
+    if (isDevelopment) localStorage.clear('token');
   },
 };

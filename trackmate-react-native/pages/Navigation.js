@@ -1,22 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getTeacherAction } from "../state/slices/teacherSlice";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Login from "./Login";
 import Overview from "./Overview";
-import Signup from "./Signup"
+import Signup from "./Signup";
 
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((store) => store.auth.loggedIn);
+
+  useEffect(() => {
+    dispatch(getTeacherAction());
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <>
             <Stack.Screen name="Overview" component={Overview} />
@@ -27,6 +33,6 @@ export default function Navigation() {
         )}
       </Stack.Navigator>
       <StatusBar style="auto" />
-    </NavigationContainer >
+    </NavigationContainer>
   );
 }

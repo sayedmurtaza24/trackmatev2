@@ -1,14 +1,22 @@
-import { View, StatusBar } from "react-native";
-import Logo from "../components/Logo";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getTeacherAction } from "../state/slices/teacherSlice";
-import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import Logo from "../components/Logo";
+import Header from "../components/Header";
+import ClassList from "../components/ClassList";
+import Footer from "../components/Footer";
 
 export default function Overview() {
   const navigation = useNavigation();
   const firstSignIn = useSelector((store) => store.teacher.firstSignIn);
   const dispatch = useDispatch();
+  const currentTeacher = useSelector(({ teacher }) => teacher.currentTeacher);
+
+  const name = currentTeacher
+    ? `${currentTeacher.firstName} ${currentTeacher.lastName}`
+    : "";
 
   useEffect(() => {
     dispatch(getTeacherAction());
@@ -16,14 +24,23 @@ export default function Overview() {
 
   useEffect(() => {
     if (firstSignIn) {
-        navigation.replace("Signup")
+      navigation.replace("Signup");
     }
-  }, [firstSignIn])
+  }, [firstSignIn]);
 
   return (
-    <View>
+    <View style={styles.root}>
       <Logo />
-      <StatusBar style="auto" />
+      <Header title={`Welcome, ${name}!`} backButton={false} />
+      <ClassList />
+      <Footer />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "white",
+    height: '100%'
+  },
+});

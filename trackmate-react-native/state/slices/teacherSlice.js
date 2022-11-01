@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import teacherBloc from "../bloc/teacherBloc";
+import { setAsLoggedIn } from "./authSlice";
 
 const initialState = {
   currentTeacher: null,
   firstSignIn: false
 };
 
-export const getTeacherAction = createAsyncThunk("getTeacher", async () => {
-  return await teacherBloc.getTeacher();
+export const getTeacherAction = createAsyncThunk("getTeacher", async (_, thunkAPI) => {
+  const teacher = await teacherBloc.getTeacher();
+  thunkAPI.dispatch(setAsLoggedIn());
+  return teacher;
 });
 
 export const createTeacherAction = createAsyncThunk("createTeacher", async ({ firstName, lastName }) => {

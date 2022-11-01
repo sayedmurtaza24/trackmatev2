@@ -7,6 +7,6 @@ export default {
     return httpClient.get(basePath);
   },
   signupTeacher: ({ firstName, lastName }) => {
-    return httpClient.post(basePath, { body: { first_name: firstName, last_name: lastName } });
+    return httpClient.post(basePath, { body: { firstName, lastName } });
   },
 };

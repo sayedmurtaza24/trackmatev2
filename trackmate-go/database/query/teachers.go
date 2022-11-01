@@ -22,9 +22,12 @@ func (query TeacherQueryI) CreateTeacher(FirstName string, LastName string, Emai
 }
 
 func (query TeacherQueryI) GetTeacher(Email string) (models.Teacher, error) {
-	teacher := models.Teacher{Email: Email}
+	teacher := models.Teacher{}
 
-	if db := query.DB.Preload("Classes").Find(&teacher); db.Error != nil {
+	if db := query.DB.
+		Preload("Classes").
+		Where("email = ?", Email).
+		First(&teacher); db.Error != nil {
 		return teacher, db.Error
 	}
 

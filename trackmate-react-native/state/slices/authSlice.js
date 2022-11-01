@@ -5,20 +5,23 @@ const initialState = {
   loggedIn: false,
 };
 
-export const loginAction = createAsyncThunk("login", async idToken => {
+export const loginAction = createAsyncThunk("login", async (idToken) => {
   return await authBloc.login(idToken);
 });
 
 export const logoutAction = createAsyncThunk("logout", async () => {
-  return await authBloc.logout()
+  return await authBloc.logout();
 });
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetAuth: state => {
+    resetAuth: (state) => {
       state.loggedIn = false;
+    },
+    setAsLoggedIn: (state) => {
+      state.loggedIn = true;
     },
   },
   extraReducers: {
@@ -31,6 +34,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuth } = authSlice.actions;
+export const { resetAuth, setAsLoggedIn } = authSlice.actions;
 
 export default authSlice.reducer;
