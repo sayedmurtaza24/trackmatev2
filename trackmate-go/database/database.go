@@ -22,6 +22,7 @@ func GetDB(dbUrl string) *gorm.DB {
 	log.Println("Running migrations")
 
 	// db.Migrator().DropTable(&models.Class{})
+	// db.Migrator().DropTable(&models.Teacher{})
 
 	db.AutoMigrate(
 		&models.Student{},

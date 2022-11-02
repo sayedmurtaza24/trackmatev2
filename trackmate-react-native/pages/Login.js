@@ -19,10 +19,12 @@ export default function Login() {
   return (
     <View style={styles.loginView}>
       <Logo />
-      <Separator height={30} />
-      <Button title="Get started" onPress={login} icon={faGoogle} />
-      <Separator height={30} />
-      <Text style={styles.text}>Welcome to the official TrackMate mobile app. Let's get started. If you don't have an account, you will be able to create one.</Text>
+      <Separator height={50} />
+      <Text style={styles.textWelcome}>Welcome to TrackMate Mobile</Text>
+      <Separator height={50} />
+      <Button title="Get started" onPress={login} icon={faGoogle} width={200} />
+      <Separator height={50} />
+      <Text style={styles.text}>{`Login with your Google Account. \nIf you don't have an account, you will be able to create one.`}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -38,6 +40,14 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   text: {
-    paddingHorizontal: 50
+    paddingHorizontal: 50,
+    fontSize: 15,
+    color: "#555",
+    lineHeight: 25,
+  },
+  textWelcome: {
+    fontSize: 20,
+    color: "#555",
+    paddingHorizontal: 50,
   }
 });

@@ -41,7 +41,7 @@ func (query ClassQueryI) GetClass(ID uint, TeacherEmail string) (*models.Class, 
 	}
 
 	if class.ID == 0 {
-		return &class, errors.New("No class found")
+		return &class, errors.New("no class found")
 	}
 
 	return &class, nil

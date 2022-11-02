@@ -22,7 +22,7 @@ func (query StudentQueryI) CreateStudent(
 
 	student := models.Student{FirstName: FirstName, LastName: LastName, Dob: Dob, Gender: Gender}
 
-	classQuery := ClassQueryI{DB: query.DB}
+	classQuery := ClassQueryI(query)
 
 	class, err := classQuery.GetClass(ClassID, TeacherEmail)
 
@@ -51,7 +51,7 @@ func (query StudentQueryI) GetStudent(ID uint, TeacherEmail string) (*models.Stu
 	}
 
 	if student.ID == 0 {
-		return &student, errors.New("No student found")
+		return &student, errors.New("no student found")
 	}
 
 	return &student, nil
@@ -70,7 +70,7 @@ func (query StudentQueryI) DeleteStudent(ID uint, TeacherEmail string) (*models.
 	}
 
 	if student.ID == 0 {
-		return &student, errors.New("No student found")
+		return &student, errors.New("no student found")
 	}
 
 	query.DB.Delete(&student)
@@ -99,7 +99,7 @@ func (query StudentQueryI) UpdateStudent(
 	}
 
 	if student.ID == 0 {
-		return &student, errors.New("No student found")
+		return &student, errors.New("no student found")
 	}
 
 	student.FirstName = FirstName

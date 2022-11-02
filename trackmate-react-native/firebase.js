@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: "trackmatev2",
   storageBucket: "trackmatev2.appspot.com",
   messagingSenderId: "287252231085",
-  appId: "1:287252231085:web:bab84af0480ae57555a724"
+  appId: "1:287252231085:web:bab84af0480ae57555a724",
 };
 
 const app = initializeApp(firebaseConfig);

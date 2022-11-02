@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import { StatusBar } from "react-native";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux";
 import { createTeacherAction } from "../state/slices/teacherSlice";
 import Logo from "../components/Logo";
 import Separator from "../components/Separator";
-import Button from "../components/Button";
+import Button, { ButtonStyle } from "../components/Button";
+import FieldOptions from "../components/FieldOption";
+import Input from "../components/TextInput";
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -16,9 +17,23 @@ export default function Signup() {
 
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
+  const [teacherFields, setTeacherFields] = React.useState([{
+    name: "",
+    valueRange: 1
+  }]);
+
+  const changeField = (index, attribute, value) => {
+    const fields = teacherFields.slice();
+    fields[index][attribute] = value;
+    setTeacherFields(fields);
+  }
 
   const signup = () => {
-    dispatch(createTeacherAction({ firstName, lastName }));
+    if (firstName.trim() && lastName.trim() && teacherFields.some(f => f.name.trim() && f.valueRange > 0)) {
+      dispatch(createTeacherAction({ firstName, lastName, teacherFields }));
+    } else {
+      console.log("Not complete")
+    }
   }
 
   useEffect(() => {
@@ -30,30 +45,54 @@ export default function Signup() {
   return (
     <View style={styles.signupView}>
       <Logo />
-      <Separator height={30} />
-      <TextInput
-        style={styles.input}
+      <Separator height={10} />
+      <Text style={styles.help}>Please fill in the details</Text>
+      <Separator height={10} />
+      <Input
         onChangeText={setFirstName}
         value={firstName}
         placeholder="First Name"
-        placeholderTextColor="#aaa"
+        required
       />
-      <Separator height={30} />
-      <TextInput
-        style={styles.input}
+      <Separator height={10} />
+      <Input
         onChangeText={setLastName}
         value={lastName}
         placeholder="Last Name"
-        placeholderTextColor="#aaa"
+        required
       />
       <Separator height={30} />
+      <Text style={styles.help}>Fill your assessment metrics</Text>
+      {teacherFields.map((field, i) => {
+        return (
+          <View key={`${i}`}>
+            <FieldOptions
+              nameValue={field.name}
+              rangeValue={field.valueRange}
+              deletable={i !== 0}
+              onRemove={() => setTeacherFields(f => [...f.slice(0, i), ...f.slice(i + 1, f.length)])}
+              onNameChange={txt => changeField(i, "name", txt)}
+              onRangeChange={num => changeField(i, "valueRange", num)} />
+            <Separator height={10} />
+          </View>
+        )
+      })}
       <Button
-        title="Get started"
-        icon={faArrowRight}
+        icon={faPlus}
+        buttonStyle={ButtonStyle.TRANSPARENT}
+        width={200}
+        onPress={() => {
+          if (teacherFields.length < 6)
+            setTeacherFields(f => f.concat({ name: "", valueRange: 1 }))
+        }} />
+      <Separator height={50} />
+      <Button
+        title="Done"
+        icon={faCheck}
         iconPosition="right"
         onPress={signup}
+        width={200}
       />
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -66,11 +105,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  input: {
-    borderColor: "royalblue",
-    borderWidth: 0.5,
+  help: {
+    paddingVertical: 8,
+    marginHorizontal: 40,
     textAlign: "center",
-    height: 40,
-    fontSize: 20,
-  },
+    fontSize: 17,
+    color: "#555"
+  }
 });

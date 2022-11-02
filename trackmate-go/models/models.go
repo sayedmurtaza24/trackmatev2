@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/datatypes"
+)
 
 type AssessmentField struct {
 	ID           uint       `json:"id" gorm:"primaryKey"`
@@ -40,9 +44,10 @@ type Class struct {
 }
 
 type Teacher struct {
-	ID        uint    `json:"id" gorm:"primaryKey"`
-	FirstName string  `json:"firstName"`
-	LastName  string  `json:"lastName"`
-	Email     string  `json:"email" gorm:"unique"`
-	Classes   []Class `json:"classes,omitempty"`
+	ID           uint           `json:"id" gorm:"primaryKey"`
+	FirstName    string         `json:"firstName"`
+	LastName     string         `json:"lastName"`
+	FieldOptions datatypes.JSON `json:"fieldOptions"`
+	Email        string         `json:"email" gorm:"unique"`
+	Classes      []Class        `json:"classes,omitempty"`
 }

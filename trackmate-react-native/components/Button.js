@@ -17,6 +17,11 @@ export const ButtonShape = Object.freeze({
   RECTANGULAR: "rectangular",
 });
 
+export const ButtonSize = Object.freeze({
+  NORMAL: "normal",
+  SMALL: "small",
+});
+
 export default function Button({
   onPress,
   title,
@@ -24,6 +29,7 @@ export default function Button({
   iconPosition = IconPosition.LEFT,
   buttonStyle = ButtonStyle.SOLID,
   buttonShape = ButtonShape.RECTANGULAR,
+  buttonSize = ButtonSize.NORMAL,
   width,
   height,
 }) {
@@ -38,7 +44,7 @@ export default function Button({
         backgroundColor: bgColor,
         width,
         height,
-        borderRadius: buttonShape === ButtonShape.ROUNDED ? "50%" : "0",
+        borderRadius: buttonShape === ButtonShape.ROUNDED ? "50%" : 8,
       }}
       underlayColor={highlightColor}
       onPress={onPress}
@@ -51,12 +57,18 @@ export default function Button({
           </>
         )}
         {!!title && (
-          <Text style={{ ...styles.title, color: textIconColor }}>{title}</Text>
+          <Text style={{
+            color: textIconColor,
+            fontSize: buttonSize === ButtonSize.NORMAL ? 18 : 15,
+          }}>{title}</Text>
         )}
         {iconPosition === "right" && (
           <>
             {title && <Separator width={10} />}
-            {icon && <FontAwesomeIcon color={textIconColor} size={18} icon={icon} />}
+            {icon && <FontAwesomeIcon
+              color={textIconColor}
+              size={buttonSize === ButtonSize.NORMAL ? 18 : 15}
+              icon={icon} />}
           </>
         )}
       </View>
@@ -72,8 +84,5 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     display: "flex",
     flexDirection: "row",
-  },
-  title: {
-    fontSize: 18,
   },
 });
