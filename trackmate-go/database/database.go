@@ -21,6 +21,9 @@ func GetDB(dbUrl string) *gorm.DB {
 	db.Logger = logger.Default.LogMode(logger.Info)
 	log.Println("Running migrations")
 
+	// db.Migrator().DropTable(&models.AssessmentField{})
+	// db.Migrator().DropTable(&models.Assessment{})
+	// db.Migrator().DropTable(&models.Student{})
 	// db.Migrator().DropTable(&models.Class{})
 	// db.Migrator().DropTable(&models.Teacher{})
 

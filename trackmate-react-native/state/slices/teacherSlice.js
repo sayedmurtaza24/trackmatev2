@@ -13,8 +13,8 @@ export const getTeacherAction = createAsyncThunk("getTeacher", async (_, thunkAP
   return teacher;
 });
 
-export const createTeacherAction = createAsyncThunk("createTeacher", async ({ firstName, lastName }) => {
-  return await teacherBloc.signupTeacher({ firstName, lastName });
+export const createTeacherAction = createAsyncThunk("createTeacher", async ({ firstName, lastName, fieldOptions }) => {
+  return await teacherBloc.signupTeacher({ firstName, lastName, fieldOptions });
 });
 
 const teacherSlice = createSlice({

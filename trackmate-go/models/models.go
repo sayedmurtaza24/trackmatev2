@@ -8,6 +8,7 @@ import (
 
 type AssessmentField struct {
 	ID           uint       `json:"id" gorm:"primaryKey"`
+	Name         string     `json:"name"`
 	Value        uint       `json:"value"`
 	Comment      string     `json:"comment"`
 	AssessmentID uint       `json:"-"`

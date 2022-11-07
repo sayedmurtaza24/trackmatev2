@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/sayedmurtaza24/trackmatev2/api/assessments"
 	authC "github.com/sayedmurtaza24/trackmatev2/api/auth"
 	"github.com/sayedmurtaza24/trackmatev2/api/classes"
 	"github.com/sayedmurtaza24/trackmatev2/api/students"
@@ -40,6 +41,7 @@ func main() {
 	students.RegisterRoute(app, db)
 	teachers.RegisterRoute(app, db)
 	classes.RegisterRoute(app, db)
+	assessments.RegisterRoute(app, db)
 
 	err := app.Listen(":3000")
 

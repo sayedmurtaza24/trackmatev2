@@ -30,7 +30,7 @@ export default function Signup() {
 
   const signup = () => {
     if (firstName.trim() && lastName.trim() && teacherFields.some(f => f.name.trim() && f.valueRange > 0)) {
-      dispatch(createTeacherAction({ firstName, lastName, teacherFields }));
+      dispatch(createTeacherAction({ firstName, lastName, fieldOptions: teacherFields }));
     } else {
       console.log("Not complete")
     }
