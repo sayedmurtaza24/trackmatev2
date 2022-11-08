@@ -15,10 +15,11 @@ type AssessmentField struct {
 	Assessment   Assessment `json:"-"`
 }
 
+// using CASCADE, we delete orphans of a table that has been deleted
 type Assessment struct {
 	ID        uint              `json:"id" gorm:"primaryKey"`
 	Date      time.Time         `json:"date"`
-	Fields    []AssessmentField `json:"fields,omitempty"`
+	Fields    []AssessmentField `json:"fields,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	StudentID uint              `json:"-"`
 	Student   Student           `json:"-"`
 }
@@ -31,7 +32,7 @@ type Student struct {
 	Gender         string       `json:"gender"`
 	GuardianEmail  string       `json:"guardianEmail"`
 	GuardianNumber string       `json:"guardianNumber"`
-	Assessments    []Assessment `json:"assessments,omitempty"`
+	Assessments    []Assessment `json:"assessments,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	ClassID        uint         `json:"-"`
 	Class          Class        `json:"-"`
 }

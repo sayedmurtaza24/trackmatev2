@@ -87,7 +87,8 @@ func (query StudentQueryI) UpdateStudent(
 	Gender string,
 	GuardianEmail string,
 	GuardianNumber string,
-	Email string) (*models.Student, error) {
+	Email string,
+) (*models.Student, error) {
 	student := models.Student{}
 
 	if db :=
