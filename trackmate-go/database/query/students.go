@@ -43,6 +43,7 @@ func (query StudentQueryI) GetStudent(ID uint, TeacherEmail string) (*models.Stu
 	if db :=
 		query.DB.
 			Preload("Assessments").
+			Preload("Assessments.Fields").
 			Where("students.id = ?", ID).
 			Joins("left join classes on classes.id = students.class_id").
 			Joins("left join teachers on teachers.id = classes.teacher_id").

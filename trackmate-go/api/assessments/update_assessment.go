@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateAssessmentSchemaI struct {
-	Date             time.Time               `json:"date"`
-	AssessmentFields []types.AssessmentField `json:"assessmentField" validate:"required"`
+	Date             string                  `json:"date"`
+	AssessmentFields []types.AssessmentField `json:"assessmentFields" validate:"required"`
 }
 
 func (h AssessmentHandler) handleUpdateAssessment(c *fiber.Ctx) error {
@@ -29,9 +29,16 @@ func (h AssessmentHandler) handleUpdateAssessment(c *fiber.Ctx) error {
 		return c.Status(422).JSON(err.Error())
 	}
 
-	assessment, err := h.query.UpdateAssessment(query.AssessmentID, body.Date, body.AssessmentFields, email)
+	date, err := time.Parse("2006-01-02", body.Date)
 
 	if err != nil {
+		return c.Status(403).JSON(map[string]string{"message": "can't parse date for date"})
+	}
+
+	assessment, err := h.query.UpdateAssessment(query.AssessmentID, date, body.AssessmentFields, email)
+
+	if err != nil {
+		print(err.Error())
 		return c.Status(403).JSON(map[string]string{"message": "something went wrong"})
 	}
 
