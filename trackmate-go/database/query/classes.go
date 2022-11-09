@@ -13,9 +13,9 @@ type ClassQueryI struct {
 
 func (query ClassQueryI) CreateClass(ClassName string, TeacherEmail string) (models.Class, error) {
 	class := models.Class{ClassName: ClassName}
-	teacher := models.Teacher{Email: TeacherEmail}
+	teacher := models.Teacher{}
 
-	if db := query.DB.Find(&teacher); db.Error != nil {
+	if db := query.DB.Where("email = ?", TeacherEmail).Find(&teacher); db.Error != nil {
 		return class, db.Error
 	}
 

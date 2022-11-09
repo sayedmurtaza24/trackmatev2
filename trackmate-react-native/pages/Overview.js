@@ -8,11 +8,12 @@ import Header from "../components/Header";
 import ClassList from "../components/ClassList";
 import Footer from "../components/Footer";
 
-export default function Overview() {
+export default function Overview({onActionButtonPress}) {
   const navigation = useNavigation();
   const firstSignIn = useSelector((store) => store.teacher.firstSignIn);
   const dispatch = useDispatch();
   const currentTeacher = useSelector(({ teacher }) => teacher.currentTeacher);
+  const currentClass = useSelector(store => store.class.currentClass);
 
   const name = currentTeacher
     ? `${currentTeacher.firstName} ${currentTeacher.lastName}`
@@ -28,12 +29,22 @@ export default function Overview() {
     }
   }, [firstSignIn]);
 
+  useEffect(() => {
+    if (currentClass) {
+      navigation.navigate("Classroom");
+    }
+  }, [currentClass]);
+
+  const navigateToAddClass = () => {
+    navigation.navigate("AddClass");
+  }
+
   return (
     <View style={styles.root}>
       <Logo />
       <Header title={`Welcome, ${name}!`} backButton={false} />
       <ClassList />
-      <Footer />
+      <Footer onActionButtonPress={navigateToAddClass}/>
     </View>
   );
 }
@@ -41,6 +52,6 @@ export default function Overview() {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: "white",
-    height: '100%'
+    height: "100%",
   },
 });

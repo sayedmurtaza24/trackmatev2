@@ -9,6 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Login from "./Login";
 import Overview from "./Overview";
 import Signup from "./Signup";
+import AddClass from "./AddClass";
+import Classroom from "./Classroom";
+import AddStudent from "./AddStudent";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +30,9 @@ export default function Navigation() {
           <>
             <Stack.Screen name="Overview" component={Overview} />
             <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen name="AddClass" component={AddClass} />
+            <Stack.Screen name="Classroom" component={Classroom} />
+            <Stack.Screen name="AddStudent" component={AddStudent} />
           </>
         ) : (
           <Stack.Screen name="Login" component={Login} />

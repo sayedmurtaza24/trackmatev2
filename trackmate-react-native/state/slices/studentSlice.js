@@ -12,9 +12,10 @@ export const getStudentAction = createAsyncThunk("getStudent", async id => {
 });
 
 //add one student
-export const createStudentAction = createAsyncThunk("createStudent", async ({ classId, name, dob, gender }, thunk) => {
+export const createStudentAction = createAsyncThunk("createStudent", async ({ classId, firstName, lastName, dob, gender }, thunk) => {
   const res = await studentBloc.createStudent(classId, {
-    name,
+    firstName,
+    lastName,
     dob,
     gender,
   });

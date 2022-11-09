@@ -1,41 +1,33 @@
 import React from "react";
 import Button, { ButtonStyle } from "./Button";
 import { StyleSheet, View, Text, FlatList, Dimensions } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { getClassAction } from "../state/slices/classSlice";
+import { useSelector } from "react-redux";
 
-const ClassList = () => {
-  const classes = useSelector(
-    (store) => store.teacher?.currentTeacher?.classes
+const StudentList = () => {
+  const students = useSelector(
+    (store) => store.class?.currentClass?.students
   );
-
-  const dispatch = useDispatch()
-
-  const goToClassroom = id => {
-    dispatch(getClassAction(id))
-  }
 
   return (
     <View style={styles.root}>
-      <Text style={styles.header}>Here's your list of classes: </Text>
-      {classes?.length ? (
+      <Text style={styles.header}>Here's your list of students: </Text>
+      {students?.length ? (
         <FlatList
           style={styles.list}
-          data={classes}
+          data={students}
           keyExtractor={({ id }) => id}
           renderItem={({ item }) => (
             <View style={styles.class} key={item.id}>
               <Button
-              //in order to use this function, we have to pass down what we identify as the classroom which is "item"
-                onPress={() => goToClassroom(item.id)}
-                title={item.className}
+                onPress={() => {}}
+                title={`${item.firstName} ${item.lastName}`}
                 buttonStyle={ButtonStyle.TRANSPARENT}
               />
             </View>
           )}
         />
       ) : (
-        <Text>No classes have been created yet!</Text>
+        <Text>No students have been created yet!</Text>
       )}
     </View>
   );
@@ -60,8 +52,8 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   list: {
-    height: windowHeight - 250,
+    height: windowHeight - 180,
   },
 });
 
-export default ClassList;
+export default StudentList;

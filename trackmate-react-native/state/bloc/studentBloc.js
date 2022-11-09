@@ -6,14 +6,14 @@ export default {
   getStudent: student_id => {
     return httpClient.get(`${basePath}/${student_id}`);
   },
-  createStudent: (class_id, { name, gender, dob }) => {
-    return httpClient.post(`${basePath}/?class_id=${class_id}`, {
-      body: { name, dob, gender }
+  createStudent: (class_id, { firstName, lastName, gender, dob }) => {
+    return httpClient.post(`${basePath}/?classId=${class_id}`, {
+      body: { firstName, lastName, dob, gender }
     })
   },
-  updateStudent: (student_id, { name, gender, dob, phone, email }) => {
+  updateStudent: (student_id, { firstName, lastName, gender, dob, phone, email }) => {
     return httpClient.patch(`${basePath}/${student_id}`, {
-      body: { name, dob, gender, emergency_contact_phone: phone, emergency_contact_email: email, }
+      body: { firstName, lastName, dob, gender, guardianNumber: phone, guardianEmail: email, }
     })
   },
   deleteStudent: student_id => {

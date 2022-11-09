@@ -6,8 +6,8 @@ export default {
   getClass: classId => {
     return httpClient.get(`${basePath}/${classId}`);
   },
-  createClass: name => {
-    return httpClient.post(`${basePath}`, { body: { name } });
+  createClass: className => {
+    return httpClient.post(`${basePath}`, { body: { className } });
   },
   getStatistics: classId => {
     return httpClient.get(`${basePath}/${classId}/statistics`);
