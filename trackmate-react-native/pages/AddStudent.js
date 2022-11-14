@@ -34,8 +34,8 @@ const AddStudent = () => {
       !/^(19|20)\d\d([-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/g.test(
         studentInfo.dob
       )
-    ) {return}
-      dispatch(createStudentAction(studentInfo));
+    ) { return }
+    dispatch(createStudentAction(studentInfo));
     navigateBack();
   };
 
@@ -48,7 +48,8 @@ const AddStudent = () => {
       />
       <View style={styles.page}>
         <Input
-          placeholder="Student first name"
+          label="First Name"
+          placeholder="First name"
           value={studentInfo.firstName}
           onChangeText={(firstName) =>
             setStudentInfo({ ...studentInfo, firstName })
@@ -57,7 +58,8 @@ const AddStudent = () => {
         />
         <Separator height={20} />
         <Input
-          placeholder="Student last name"
+          label="Last Name"
+          placeholder="Last name"
           value={studentInfo.lastName}
           onChangeText={(lastName) =>
             setStudentInfo({ ...studentInfo, lastName })
@@ -66,13 +68,15 @@ const AddStudent = () => {
         />
         <Separator height={20} />
         <Input
-          placeholder="Date of birth"
+          label="Date of birth"
+          placeholder="YYYY-MM-DD"
           value={studentInfo.dob}
           onChangeText={(dob) => setStudentInfo({ ...studentInfo, dob })}
           required
         />
         <Separator height={20} />
         <Input
+          label="Gender"
           placeholder="Gender"
           value={studentInfo.gender}
           onChangeText={(gender) => setStudentInfo({ ...studentInfo, gender })}

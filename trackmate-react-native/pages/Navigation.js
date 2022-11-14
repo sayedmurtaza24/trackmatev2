@@ -12,6 +12,8 @@ import Signup from "./Signup";
 import AddClass from "./AddClass";
 import Classroom from "./Classroom";
 import AddStudent from "./AddStudent";
+import StudentPage from "./StudentPage";
+import AddAssessment from "./AddAssessment";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +35,8 @@ export default function Navigation() {
             <Stack.Screen name="AddClass" component={AddClass} />
             <Stack.Screen name="Classroom" component={Classroom} />
             <Stack.Screen name="AddStudent" component={AddStudent} />
+            <Stack.Screen name="StudentPage" component={StudentPage} />
+            <Stack.Screen name="AddAssessment" component={AddAssessment} /> 
           </>
         ) : (
           <Stack.Screen name="Login" component={Login} />

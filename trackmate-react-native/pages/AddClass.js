@@ -3,7 +3,6 @@ import { View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-
 import Header from "../components/Header";
 import Input from "../components/TextInput";
 import Button from "../components/Button";
@@ -34,6 +33,7 @@ const AddClass = () => {
       />
       <View style={styles.page}>
         <Input
+          label="Class name"
           placeholder="Class name"
           value={className}
           onChangeText={setClassName}

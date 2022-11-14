@@ -1,12 +1,22 @@
 import React from "react";
 import Button, { ButtonStyle } from "./Button";
 import { StyleSheet, View, Text, FlatList, Dimensions } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { getStudentAction } from "../state/slices/studentSlice";
 
 const StudentList = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  
   const students = useSelector(
     (store) => store.class?.currentClass?.students
   );
+
+  const navigateToStudentPage = (id) => {
+    dispatch(getStudentAction(id));
+    navigation.navigate("StudentPage");
+  }
 
   return (
     <View style={styles.root}>
@@ -19,7 +29,7 @@ const StudentList = () => {
           renderItem={({ item }) => (
             <View style={styles.class} key={item.id}>
               <Button
-                onPress={() => {}}
+                onPress={() => navigateToStudentPage(item.id)}
                 title={`${item.firstName} ${item.lastName}`}
                 buttonStyle={ButtonStyle.TRANSPARENT}
               />

@@ -1,11 +1,12 @@
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, Text } from 'react-native';
+import Separator from './Separator';
 
 export const InputType = Object.freeze({
     TEXT: 'text',
     NUMERIC: 'numeric',
 });
 
-const Input = ({ onChangeText, value, placeholder, required, type = InputType.TEXT }) => {
+const Input = ({ label, onChangeText, value, placeholder, required, type = InputType.TEXT }) => {
     const onChange = (text) => {
         switch (type) {
             case InputType.TEXT:
@@ -18,13 +19,17 @@ const Input = ({ onChangeText, value, placeholder, required, type = InputType.TE
     }
 
     return (
-        <TextInput
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-            placeholder={placeholder}
-            placeholderTextColor="#aaa"
-            required={required} />
+        <>
+            {label && <Text style={styles.label}>{label}</Text>}
+            {label && <Separator height={10} />}
+            <TextInput
+                style={styles.input}
+                onChangeText={onChange}
+                value={value}
+                placeholder={placeholder}
+                placeholderTextColor="#aaa"
+                required={required} />
+        </>
     );
 }
 
@@ -36,6 +41,10 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         fontSize: 18,
     },
+    label: {
+        paddingHorizontal: 10,
+        fontSize: 15.5,
+    }
 });
 
 export default Input;
