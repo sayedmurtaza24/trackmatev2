@@ -6,7 +6,7 @@ export const InputType = Object.freeze({
     NUMERIC: 'numeric',
 });
 
-const Input = ({ label, onChangeText, value, placeholder, required, type = InputType.TEXT }) => {
+const Input = ({ label, onChangeText, value, placeholder, required, type = InputType.TEXT, multiline, numberOflines }) => {
     const onChange = (text) => {
         switch (type) {
             case InputType.TEXT:
@@ -23,12 +23,16 @@ const Input = ({ label, onChangeText, value, placeholder, required, type = Input
             {label && <Text style={styles.label}>{label}</Text>}
             {label && <Separator height={10} />}
             <TextInput
+                multiline={multiline}
+                numberOfLines={numberOflines}
                 style={styles.input}
                 onChangeText={onChange}
                 value={value}
                 placeholder={placeholder}
                 placeholderTextColor="#aaa"
-                required={required} />
+                required={required} 
+                editable
+                />
         </>
     );
 }
@@ -37,7 +41,8 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: "#eee",
         paddingHorizontal: 20,
-        height: 40,
+        paddingVertical: 13,
+        minHeight: 40,
         borderRadius: 6,
         fontSize: 18,
     },

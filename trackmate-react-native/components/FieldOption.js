@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import Button, { ButtonSize, ButtonStyle } from "./Button";
 import Separator from "./Separator";
 import Input, { InputType } from "./TextInput";
+import NumberPicker from "./NumberPicker";
 
 const FieldOptions = ({
   onNameChange,
@@ -16,18 +17,19 @@ const FieldOptions = ({
   return (
     <View style={styles.root}>
       <Input
+        label="Field name"
         placeholder="Name of field"
         style={styles.input}
         value={nameValue}
         onChangeText={onNameChange}
       />
       <Separator height={10} />
-      <Input
-        placeholder="Range of values"
-        style={styles.input}
-        type={InputType.NUMERIC}
-        value={rangeValue}
-        onChangeText={onRangeChange}
+      <NumberPicker
+        label="Range of values"
+        minimum={2}
+        maximum={10}
+        currentNumber={rangeValue}
+        onChange={(value) => onRangeChange(value)}
       />
       <Separator height={10} />
       {deletable && (

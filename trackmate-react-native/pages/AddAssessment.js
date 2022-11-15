@@ -1,29 +1,169 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
-import Header from '../components/Header';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import DatePicker from "react-native-modern-datepicker";
+
+import Header from "../components/Header";
+import Input from "../components/TextInput";
+import Separator from "../components/Separator";
+import Button from "../components/Button";
+import NumberPicker from "../components/NumberPicker";
+import ToggleButton from "../components/ToggleButton";
+
+import { resetCurrentStudent } from "../state/slices/studentSlice";
+import { createAssessmentAction } from "../state/slices/assessmentSlice";
 
 const AddAssessment = () => {
-    const assessments = useSelector(store => store.student.currentStudent?.assessments);
-    const currentStudent = useSelector(store => store.student.currentStudent?.assessments)
-    const dispatch = useDispatch()
+  const navigation = useNavigation();
 
-    const navigateBack = () => {
-        dispatch(resetCurrentStudent());
-        navigation.goBack();
+  const fieldOptions = useSelector(
+    (store) => store.teacher.currentTeacher?.fieldOptions
+  );
+
+  const [assessment, setAssessment] = useState({
+    date: "",
+    assessmentFields: fieldOptions.map((f) => ({
+      name: f.name,
+      value: f.valueRange,
+      comment: "",
+      valueRange: f.valueRange,
+    })),
+  });
+
+  const updateAssessmentField = (index, value) => {
+    const fields = assessment.assessmentFields.slice();
+    fields[index] = value;
+    setAssessment({ ...assessment, assessmentFields: fields });
+  };
+
+  const dispatch = useDispatch();
+
+  const navigateBack = () => {
+    navigation.goBack();
+  };
+
+  const addAssessment = () => {
+    const data = {
+      date: assessment.date,
+      assessmentFields: assessment.assessmentFields.map(
+        ({ name, value, comment }) => ({ name, value, comment })
+      ),
     };
+    // dispatch(createAssessmentAction());
+    console.log(assessment);
+    navigateBack();
+  };
 
-    return (
+  return (
+    <SafeAreaView style={styles.page}>
+      <Header
+        backButton={true}
+        onBackButtonPressed={navigateBack}
+        title={"Add assessment"}
+      />
+      <ScrollView style={styles.scrollView}>
         <View>
-            <Header
-                backButton={true}
-                onBackButtonPressed={navigateBack}
-                title={(currentStudent?.firstName || 'Loading') + ' ' + (currentStudent?.lastName || '') + ' - ' + (currentClass.className || 'Loading')}
-            />
-            
+          <DatePicker
+            options={{
+              backgroundColor: "white",
+              textHeaderColor: "#187dc9",
+              textDefaultColor: "black",
+              selectedTextColor: "white",
+              mainColor: "#187dc9",
+              textSecondaryColor: "#187dc9",
+            }}
+            current={assessment.date}
+            mode="calendar"
+            style={styles.datePicker}
+            onDateChange={(date) =>
+              setAssessment({ ...assessment, date: date.replace(/\//g, "-") })
+            }
+          />
+          {assessment.assessmentFields?.length &&
+            assessment.assessmentFields.map((f, i) => (
+              <View key={f.name} style={styles.assessmentField}>
+                <Text style={styles.assessmentTitle}>{f.name}</Text>
+                <Separator height={20} />
+                {f.valueRange == 2 ? (
+                  <ToggleButton
+                    label={"Toggle " + f.name}
+                    title={f.name}
+                    value={f.value === 2}
+                    onChange={(value) =>
+                      updateAssessmentField(i, { ...f, value: value ? 2 : 1 })
+                    }
+                  />
+                ) : (
+                  <NumberPicker
+                    label="Choose value"
+                    currentNumber={f.value}
+                    minimum={1}
+                    maximum={f.valueRange}
+                    onChange={(value) =>
+                      updateAssessmentField(i, { ...f, value })
+                    }
+                  />
+                )}
+                <Separator height={20} />
+                <Input
+                  multiline={true}
+                  numberOflines={4}
+                  label={f.name + " comment"}
+                  placeholder={"Comment on " + f.name}
+                  onChangeText={(comment) =>
+                    updateAssessmentField(i, { ...f, comment })
+                  }
+                  required
+                />
+              </View>
+            ))}
+          <Separator height={10} />
+          <Button
+            onPress={addAssessment}
+            title="Add assessment"
+            icon={faPlus}
+          />
         </View>
-    )
-}
+        <Separator height={20} />
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-export default AddAssessment
+const styles = StyleSheet.create({
+  page: {
+    height: "100%",
+    padding: 30,
+    display: "flex",
+    backgroundColor: "white",
+    justifyContent: "center",
+  },
+  scrollView: {
+    marginHorizontal: 20,
+    paddingVertical: 10,
+  },
+  assessmentTitle: {
+    fontSize: 18,
+    textAlign: "center",
+    width: "100%",
+  },
+  assessmentField: {
+    borderRadius: 8,
+    borderColor: "#eee",
+    borderWidth: 2,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  instruct: {
+    paddingHorizontal: 10,
+    fontSize: 15.5,
+  },
+  datePicker: {
+    paddingHorizontal: 0,
+  },
+});
+
+export default AddAssessment;
