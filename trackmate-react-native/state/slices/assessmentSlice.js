@@ -8,20 +8,16 @@ const initialState = {
 
 export const createAssessmentAction = createAsyncThunk(
   "createAssessment",
-  async ({ studentId, present, good_behave, good_perf, date, perf_comment, behave_comment }, thunk) => {
-    const res = await assessmentBloc.addAssessment(studentId, {
-      present, good_behave, good_perf, date, perf_comment, behave_comment
-    })
+  async ({ studentId, data }, thunk) => {
+    const res = await assessmentBloc.addAssessment(studentId, data)
     thunk.dispatch(getStudentAction(studentId))
     return res;
   });
 
 export const updateAssessmentAction = createAsyncThunk(
   "updateAssessment",
-  async ({ assessmentId, studentId, present, good_behave, good_perf, perf_comment, behave_comment }, thunk) => {
-    const res = await assessmentBloc.updateAssessment(assessmentId, {
-      present, good_behave, good_perf, perf_comment, behave_comment
-    })
+  async ({ assessmentId, studentId, data }, thunk) => {
+    const res = await assessmentBloc.updateAssessment(assessmentId, data)
     thunk.dispatch(getStudentAction(studentId))
     return res;
   });

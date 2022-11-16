@@ -38,7 +38,7 @@ func (h AssessmentHandler) handleCreateAssessment(c *fiber.Ctx) error {
 	assessment, err := h.query.CreateAssessment(query.StudentID, date, body.AssessmentFields, email)
 
 	if err != nil {
-		return c.Status(403).JSON(map[string]string{"message": "something went wrong"})
+		return c.Status(403).JSON(map[string]string{"message": err.Error()})
 	}
 
 	return c.Status(201).JSON(&assessment)

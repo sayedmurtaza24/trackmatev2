@@ -66,7 +66,7 @@ func (query AssessmentQueryI) CreateAssessment(
 		for _, fo := range fieldOptions {
 			if fo.Name == f.Name {
 				exists = true
-				if f.Value < fo.ValueRange {
+				if f.Value <= fo.ValueRange {
 					valid = true
 				}
 			}
@@ -130,7 +130,7 @@ func (query AssessmentQueryI) UpdateAssessment(
 		for _, fo := range fieldOptions {
 			if fo.Name == f.Name {
 				exists = true
-				if f.Value < fo.ValueRange {
+				if f.Value <= fo.ValueRange {
 					valid = true
 				}
 			}

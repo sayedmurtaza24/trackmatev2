@@ -8,7 +8,7 @@ import Header from "../components/Header";
 import ClassList from "../components/ClassList";
 import Footer from "../components/Footer";
 
-export default function Overview({onActionButtonPress}) {
+export default function Overview() {
   const navigation = useNavigation();
   const firstSignIn = useSelector((store) => store.teacher.firstSignIn);
   const dispatch = useDispatch();

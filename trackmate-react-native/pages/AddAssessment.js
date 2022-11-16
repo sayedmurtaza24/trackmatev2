@@ -12,11 +12,11 @@ import Button from "../components/Button";
 import NumberPicker from "../components/NumberPicker";
 import ToggleButton from "../components/ToggleButton";
 
-import { resetCurrentStudent } from "../state/slices/studentSlice";
 import { createAssessmentAction } from "../state/slices/assessmentSlice";
 
 const AddAssessment = () => {
   const navigation = useNavigation();
+  const currentStudent = useSelector(store => store.student.currentStudent);
 
   const fieldOptions = useSelector(
     (store) => store.teacher.currentTeacher?.fieldOptions
@@ -51,8 +51,7 @@ const AddAssessment = () => {
         ({ name, value, comment }) => ({ name, value, comment })
       ),
     };
-    // dispatch(createAssessmentAction());
-    console.log(assessment);
+    dispatch(createAssessmentAction({ studentId: currentStudent.id, data }));
     navigateBack();
   };
 
