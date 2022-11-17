@@ -14,6 +14,13 @@ type AssessmentQueryI struct {
 	DB *gorm.DB
 }
 
+func compareDates(a time.Time, b time.Time) bool {
+	// aString := fmt.Sprintf("%v-%v-%v", a.Year(), a.Month(), a.Day())
+	// bString := fmt.Sprintf("%v-%v-%v", b.Year(), b.Month(), b.Day())
+	// return aString == bString
+	return a.Year() == b.Year() && a.Month() == b.Month() && a.Day() == b.Day()
+}
+
 func (query AssessmentQueryI) CreateAssessment(
 	StudentID uint,
 	Date time.Time,
@@ -25,11 +32,18 @@ func (query AssessmentQueryI) CreateAssessment(
 	student := models.Student{}
 
 	if db := query.DB.
+		Preload("Assessments").
 		Where("students.id = ? AND teachers.email = ?", StudentID, TeacherEmail).
 		Joins("left join classes on classes.id = students.class_id").
 		Joins("left join teachers on teachers.id = classes.teacher_id").
 		Find(&student); db.Error != nil {
 		return &assessment, db.Error
+	}
+
+	for _, a := range student.Assessments {
+		if compareDates(a.Date, Date) {
+			return &assessment, errors.New("the date already exists")
+		}
 	}
 
 	if student.ID == 0 {

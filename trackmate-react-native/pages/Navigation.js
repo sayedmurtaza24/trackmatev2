@@ -7,13 +7,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Login from "./Login";
-import Overview from "./Overview";
 import Signup from "./Signup";
 import AddClass from "./AddClass";
+import Overview from "./Overview";
 import Classroom from "./Classroom";
 import AddStudent from "./AddStudent";
 import StudentPage from "./StudentPage";
 import AddAssessment from "./AddAssessment";
+import UpdateAssessment from "./UpdateAssessment";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export default function Navigation() {
             <Stack.Screen name="AddStudent" component={AddStudent} />
             <Stack.Screen name="StudentPage" component={StudentPage} />
             <Stack.Screen name="AddAssessment" component={AddAssessment} /> 
+            <Stack.Screen name="UpdateAssessment" component={UpdateAssessment} />
           </>
         ) : (
           <Stack.Screen name="Login" component={Login} />

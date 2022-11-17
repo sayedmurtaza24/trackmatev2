@@ -39,7 +39,7 @@ func (h StudentHandler) handleCreateStudent(c *fiber.Ctx) error {
 	student, err := h.query.CreateStudent(query.ClassID, body.FirstName, body.LastName, dob, body.Gender, email)
 
 	if err != nil {
-		return c.Status(403).JSON(map[string]string{"message": "something went wrong"})
+		return c.Status(403).JSON(map[string]string{"message": "something went wrong in the create assessment"})
 	}
 
 	return c.Status(201).JSON(&student)

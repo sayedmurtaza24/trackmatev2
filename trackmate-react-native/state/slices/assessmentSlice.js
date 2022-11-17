@@ -10,7 +10,7 @@ export const createAssessmentAction = createAsyncThunk(
   "createAssessment",
   async ({ studentId, data }, thunk) => {
     const res = await assessmentBloc.addAssessment(studentId, data)
-    thunk.dispatch(getStudentAction(studentId))
+    thunk.dispatch(getStudentAction(studentId));
     return res;
   });
 
@@ -18,7 +18,7 @@ export const updateAssessmentAction = createAsyncThunk(
   "updateAssessment",
   async ({ assessmentId, studentId, data }, thunk) => {
     const res = await assessmentBloc.updateAssessment(assessmentId, data)
-    thunk.dispatch(getStudentAction(studentId))
+    thunk.dispatch(getStudentAction(studentId));
     return res;
   });
 
@@ -39,13 +39,13 @@ const assessmentSlice = createSlice({
   },
   extraReducers: {
     [createAssessmentAction.fulfilled]: (state, action) => {
-      state.currentAssessment = action.payload;
+      state.currentAssessment = null;
     },
     [updateAssessmentAction.fulfilled]: (state, action) => {
-      state.currentAssessment = action.payload;
+      state.currentAssessment = null;
     },
     [deleteAssessmentAction.fulfilled]: (state) => {
-      state.currentClass = null;
+      state.currentAssessment = null;
     },
   },
 });

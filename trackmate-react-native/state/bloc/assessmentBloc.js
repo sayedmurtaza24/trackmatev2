@@ -9,7 +9,7 @@ export default {
     });
   },
   updateAssessment: (assessment_id, data) => {
-    return httpClient.patch(`${basePath}/${assessment_id}`, {
+    return httpClient.put(`${basePath}/${assessment_id}`, {
       body: data
     });
   },

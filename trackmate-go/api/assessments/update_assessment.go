@@ -8,18 +8,20 @@ import (
 )
 
 type UpdateAssessmentSchemaI struct {
-	Date             string                  `json:"date"`
-	AssessmentFields []types.AssessmentField `json:"assessmentFields" validate:"required"`
+	Date             string                  `json:"date" validate:"required"`
+	AssessmentFields []types.AssessmentField `json:"fields" validate:"required"`
 }
 
 func (h AssessmentHandler) handleUpdateAssessment(c *fiber.Ctx) error {
 	email := c.Locals("Email").(string)
 
-	query := struct {
-		AssessmentID uint `query:"assessmentId"`
+	param := struct {
+		AssessmentID uint `params:"id"`
 	}{}
 
-	if err := c.QueryParser(&query); err != nil {
+	println(param.AssessmentID)
+
+	if err := c.ParamsParser(&param); err != nil {
 		return c.Status(403).JSON(map[string]string{"message": "Assessment ID should be integer"})
 	}
 
@@ -35,11 +37,11 @@ func (h AssessmentHandler) handleUpdateAssessment(c *fiber.Ctx) error {
 		return c.Status(403).JSON(map[string]string{"message": "can't parse date for date"})
 	}
 
-	assessment, err := h.query.UpdateAssessment(query.AssessmentID, date, body.AssessmentFields, email)
+	assessment, err := h.query.UpdateAssessment(param.AssessmentID, date, body.AssessmentFields, email)
 
 	if err != nil {
 		print(err.Error())
-		return c.Status(403).JSON(map[string]string{"message": "something went wrong"})
+		return c.Status(403).JSON(map[string]string{"message": "something went wrong in the update assessement"})
 	}
 
 	return c.Status(201).JSON(&assessment)

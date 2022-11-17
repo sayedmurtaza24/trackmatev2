@@ -3,14 +3,12 @@ import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
+import { createClassAction } from "../state/slices/classSlice";
+
 import Header from "../components/Header";
 import Input from "../components/TextInput";
 import Button from "../components/Button";
 import Separator from "../components/Separator";
-import { createClassAction } from "../state/slices/classSlice";
-
-import NumberPicker from "../components/NumberPicker";
-import ToggleButton from "../components/ToggleButton";
 
 const AddClass = () => {
   const navigation = useNavigation();
