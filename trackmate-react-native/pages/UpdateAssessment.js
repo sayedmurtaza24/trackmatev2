@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -13,9 +13,10 @@ import Button from "../components/Button";
 import NumberPicker from "../components/NumberPicker";
 import ToggleButton from "../components/ToggleButton";
 
-const AddAssessment = () => {
+const UpdateAssessment = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  
   const currentAssessment = useSelector(
     (store) => store.assessment?.currentAssessment
   );
@@ -65,6 +66,18 @@ const AddAssessment = () => {
     navigateBack();
   };
 
+  const scrollToSection = useRef(null);
+
+  useEffect(() => {
+    const defaultOffset = 360;
+    const sectionHeight = 340;
+    scrollToSection.current.scrollTo({
+      x: 0,
+      y: defaultOffset + sectionHeight * route.params.index,
+      animated: true
+    });
+  }, [currentAssessment])
+
   return (
     <SafeAreaView style={styles.page}>
       <Header
@@ -72,7 +85,7 @@ const AddAssessment = () => {
         onBackButtonPressed={navigateBack}
         title={"Update assessment"}
       />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} ref={scrollToSection}>
         <View>
           <DatePicker
             options={{
@@ -177,4 +190,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAssessment;
+export default UpdateAssessment;

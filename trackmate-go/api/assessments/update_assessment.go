@@ -19,8 +19,6 @@ func (h AssessmentHandler) handleUpdateAssessment(c *fiber.Ctx) error {
 		AssessmentID uint `params:"id"`
 	}{}
 
-	println(param.AssessmentID)
-
 	if err := c.ParamsParser(&param); err != nil {
 		return c.Status(403).JSON(map[string]string{"message": "Assessment ID should be integer"})
 	}

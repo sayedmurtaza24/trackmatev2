@@ -159,6 +159,10 @@ func (query AssessmentQueryI) UpdateAssessment(
 
 	assessment.Date = Date
 
+	for _, f := range assessment.Fields {
+		query.DB.Save(&f)
+	}
+
 	query.DB.Save(&assessment)
 
 	return &assessment, nil

@@ -10,14 +10,12 @@ import Footer from "../components/Footer";
 
 export default function Overview() {
   const navigation = useNavigation();
-  const firstSignIn = useSelector((store) => store.teacher.firstSignIn);
   const dispatch = useDispatch();
+  const firstSignIn = useSelector((store) => store.teacher.firstSignIn);
   const currentTeacher = useSelector(({ teacher }) => teacher.currentTeacher);
   const currentClass = useSelector(store => store.class.currentClass);
 
-  const name = currentTeacher
-    ? `${currentTeacher.firstName} ${currentTeacher.lastName}`
-    : "";
+  const name = currentTeacher ? `${currentTeacher.firstName} ${currentTeacher.lastName}` : "";
 
   useEffect(() => {
     dispatch(getTeacherAction());
@@ -44,7 +42,7 @@ export default function Overview() {
       <Logo />
       <Header title={`Welcome, ${name}!`} backButton={false} />
       <ClassList />
-      <Footer onActionButtonPress={navigateToAddClass}/>
+      <Footer onActionButtonPress={navigateToAddClass} />
     </View>
   );
 }

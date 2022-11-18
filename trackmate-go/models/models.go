@@ -19,7 +19,7 @@ type AssessmentField struct {
 type Assessment struct {
 	ID        uint              `json:"id" gorm:"primaryKey"`
 	Date      time.Time         `json:"date"`
-	Fields    []AssessmentField `json:"fields,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Fields    []AssessmentField `json:"fields,omitempty" gorm:"constraint:OnDelete:CASCADE;"`
 	StudentID uint              `json:"-"`
 	Student   Student           `json:"-"`
 }

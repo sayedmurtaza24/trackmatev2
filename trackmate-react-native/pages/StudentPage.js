@@ -10,15 +10,16 @@ import Footer from "../components/Footer";
 import DateTile from "../components/DateTile";
 import AssessmentTile from "../components/AssessmentTile";
 import AssessmentComment from "../components/AssessmentComment";
+import Separator from "../components/Separator";
 
 const StudentPage = () => {
   const navigation = useNavigation();
-  const [selectedAssessmentF, setSelectedAssessmentF] = useState(null);
   const currentStudent = useSelector((store) => store?.student?.currentStudent);
   const currentClass = useSelector((store) => store.class.currentClass);
   const fieldOptions = useSelector(
     (store) => store.teacher.currentTeacher.fieldOptions
   );
+  const [selectedAssessmentF, setSelectedAssessmentF] = useState(null);
   const dispatch = useDispatch();
 
   const navigateBack = () => {
@@ -45,8 +46,8 @@ const StudentPage = () => {
   };
 
   const onEdit = () => {
+    navigation.navigate("UpdateAssessment", { index: selectedAssessmentF.index });
     setSelectedAssessmentF(null);
-    navigation.navigate("UpdateAssessment");
   };
 
   return (
@@ -62,37 +63,42 @@ const StudentPage = () => {
           (currentClass.className || "Loading")
         }
       />
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.fieldOptionHeader}>
-          <View style={{ ...styles.dateTile, ...styles.headerTile }}>
-            <Text>Date</Text>
+      <ScrollView horizontal={true}>
+        <ScrollView
+          stickyHeaderIndices={[0]}
+          stickyHeaderHiddenOnScroll={false}
+          nestedScrollEnabled={true}
+          style={styles.scrollView}>
+          <View style={styles.fieldOptionHeader}>
+            <View style={{ ...styles.dateTile, ...styles.headerTile }}>
+              <Text>Date</Text>
+            </View>
+            {fieldOptions.map((field) => {
+              return (
+                <View
+                  style={{ ...styles.headerTile }}
+                  key={field.name + field.valueRange}
+                >
+                  <Text style={styles.fieldOptionHeaderTitle}>
+                    {makeItEllipsis(field.name)}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
-          {fieldOptions.map((field) => {
-            return (
-              <View
-                style={{ ...styles.headerTile }}
-                key={field.name + field.valueRange}
-              >
-                <Text style={styles.fieldOptionHeaderTitle}>
-                  {makeItEllipsis(field.name)}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
-        <ScrollView>
           {sortAssessmentByDate(currentStudent?.assessments)?.map(
             (assessment) => {
               return (
                 <View key={assessment.date} style={styles.assessmentField}>
                   <DateTile date={assessment.date} />
-                  {assessment?.fields?.map((f) => {
+                  {assessment?.fields?.map((f, i) => {
                     return (
                       <AssessmentTile
                         onPress={() => {
                           setSelectedAssessmentF({
                             ...f,
                             valueRange: findValueRange(f.name),
+                            index: i,
                           });
                           dispatch(selectAssessment(assessment));
                         }}
@@ -108,6 +114,7 @@ const StudentPage = () => {
           )}
         </ScrollView>
       </ScrollView>
+      <Separator height={80} />
       <AssessmentComment
         visible={!!selectedAssessmentF}
         name={selectedAssessmentF?.name}
@@ -128,15 +135,15 @@ const StudentPage = () => {
 const styles = StyleSheet.create({
   root: {
     height: "100%",
-    backgroundColor: "#E0FFFF",
+    backgroundColor: "white",
   },
   fieldOptionHeader: {
     display: "flex",
     flexDirection: "row",
+    backgroundColor: "white"
   },
   scrollView: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
   },
   headerTile: {
     width: 60,
