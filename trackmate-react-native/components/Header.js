@@ -7,6 +7,9 @@ export default function Header({
   title,
   backButton = false,
   onBackButtonPressed = () => {},
+  rightButton = false,
+  rightButtonIcon,
+  rightButtonOnPressed,
 }) {
   return (
     <View style={styles.header}>
@@ -20,8 +23,19 @@ export default function Header({
           buttonShape={ButtonShape.ROUNDED}
         />
       )}
-      {backButton && <Separator width={30} />}
+      {/* {backButton && <Separator width={30} />} */}
       <Text style={styles.title}>{title ? title : "Loading..."}</Text>
+      {rightButton && <Separator width={30} />}
+      {rightButton && rightButtonIcon ? (
+        <Button
+          icon={rightButtonIcon}
+          buttonStyle={ButtonStyle.TRANSPARENT}
+          onPress={rightButtonOnPressed}
+          buttonShape={ButtonShape.ROUNDED}
+          width={50}
+          height={50}
+        />
+      ) : <Separator width={50} height={50} />}
     </View>
   );
 }
@@ -30,6 +44,7 @@ const styles = StyleSheet.create({
   header: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: "center",
     height: 65,

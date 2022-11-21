@@ -7,38 +7,47 @@ const initialState = {
 };
 
 //get one student
-export const getStudentAction = createAsyncThunk("getStudent", async id => {
+export const getStudentAction = createAsyncThunk("getStudent", async (id) => {
   return await studentBloc.getStudent(id);
 });
 
 //add one student
-export const createStudentAction = createAsyncThunk("createStudent", async ({ classId, firstName, lastName, dob, gender }, thunk) => {
-  const res = await studentBloc.createStudent(classId, {
-    firstName,
-    lastName,
-    dob,
-    gender,
-  });
-  thunk.dispatch(getClassAction(classId));
-  return res;
-});
+export const createStudentAction = createAsyncThunk(
+  "createStudent",
+  async ({ classId, firstName, lastName, dob, gender }, thunk) => {
+    const res = await studentBloc.createStudent(classId, {
+      firstName,
+      lastName,
+      dob,
+      gender,
+    });
+    thunk.dispatch(getClassAction(classId));
+    return res;
+  }
+);
 
 //add one student
-export const updateStudentAction = createAsyncThunk("updateStudent", async ({ studentId, name, dob, gender, phone, email }) => {
-  return await studentBloc.updateStudent(studentId, {
-    name,
-    dob,
-    gender,
-    phone,
-    email,
-  });
-});
+export const updateStudentAction = createAsyncThunk(
+  "updateStudent",
+  async ({ studentId, name, dob, gender, phone, email }) => {
+    return await studentBloc.updateStudent(studentId, {
+      name,
+      dob,
+      gender,
+      phone,
+      email,
+    });
+  }
+);
 
 //delete one student
-export const deleteStudentAction = createAsyncThunk("deleteStudent", async ({ studentId, classId }, thunk) => {
-  await studentBloc.deleteStudent(studentId);
-  thunk.dispatch(getClassAction(classId));
-});
+export const deleteStudentAction = createAsyncThunk(
+  "deleteStudent",
+  async ({ studentId, classId }, thunk) => {
+    await studentBloc.deleteStudent(studentId);
+    thunk.dispatch(getClassAction(classId));
+  }
+);
 
 //studentSlice
 const studentSlice = createSlice({
@@ -59,7 +68,7 @@ const studentSlice = createSlice({
     [updateStudentAction.fulfilled]: (state, action) => {
       state.currentStudent = action.payload;
     },
-    [deleteStudentAction.fulfilled]: state => {
+    [deleteStudentAction.fulfilled]: (state) => {
       state.currentStudent = null;
     },
   },

@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { resetCurrentStudent } from "../state/slices/studentSlice";
 import { selectAssessment } from "../state/slices/assessmentSlice";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -46,7 +47,9 @@ const StudentPage = () => {
   };
 
   const onEdit = () => {
-    navigation.navigate("UpdateAssessment", { index: selectedAssessmentF.index });
+    navigation.navigate("UpdateAssessment", {
+      index: selectedAssessmentF.index,
+    });
     setSelectedAssessmentF(null);
   };
 
@@ -62,13 +65,17 @@ const StudentPage = () => {
           " - " +
           (currentClass.className || "Loading")
         }
+        rightButton={true}
+        rightButtonIcon={faUser}
+        rightButtonOnPressed={() => navigation.navigate("StudentProfile")}
       />
       <ScrollView horizontal={true}>
         <ScrollView
           stickyHeaderIndices={[0]}
           stickyHeaderHiddenOnScroll={false}
           nestedScrollEnabled={true}
-          style={styles.scrollView}>
+          style={styles.scrollView}
+        >
           <View style={styles.fieldOptionHeader}>
             <View style={{ ...styles.dateTile, ...styles.headerTile }}>
               <Text>Date</Text>
@@ -140,7 +147,7 @@ const styles = StyleSheet.create({
   fieldOptionHeader: {
     display: "flex",
     flexDirection: "row",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   scrollView: {
     paddingHorizontal: 20,
