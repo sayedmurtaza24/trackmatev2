@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import Header from "../components/Header";
 import DatePicker from "react-native-modern-datepicker";
 
+import { deleteStudentAction } from "../state/slices/studentSlice";
 import { updateStudentAction } from "../state/slices/studentSlice";
 import Input from "../components/TextInput";
 
@@ -14,18 +15,16 @@ const UpdateStudentProfile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-
   const [student, setStudent] = useState({
     firstName: currentStudent.firstName,
-    lastname: currentStudent.lastname,
+    lastname: currentStudent.lastName,
     dob: currentStudent.dob.split("T")[0],
     gender: currentStudent.gender,
     guardianNumber: currentStudent.number || "",
     guardianEmail: currentStudent.email || "",
   });
+
+  console.log(student)
 
   const updateStudentField = (index, value) => {
     const fields = student.fields.slice();
@@ -52,15 +51,13 @@ const UpdateStudentProfile = () => {
   };
 
   return (
-    <View style={styles.page}>
+    <SafeAreaView style={styles.page}>
       <Header
         title="Update student profile"
         backButton={true}
-        onBackButtonPressed={navigateBack}
-      ></Header>
+        onBackButtonPressed={() => navigation.goBack()}
+      />
       <ScrollView>
-        <Input />
-        <Input />
         <DatePicker
           options={{
             backgroundColor: "white",
@@ -80,12 +77,18 @@ const UpdateStudentProfile = () => {
         />
         <Input />
         <Input />
+        <Input />
+        <Input />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    height: "100%",
+    backgroundColor: "white",
+  },
   page: {
     height: "100%",
     padding: 30,

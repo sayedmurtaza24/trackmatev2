@@ -10,10 +10,10 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import Header from "../components/Header";
-import Button from "../components/Button";
 
-import { deleteStudentAction } from "../state/slices/studentSlice";
 import Separator from "../components/Separator";
+import Footer from "../components/Footer";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const StudentProfile = () => {
   const currentStudent = useSelector((store) => store.student.currentStudent);
@@ -68,6 +68,7 @@ const StudentProfile = () => {
           </Text>
         </ScrollView>
       )}
+      <Footer onActionButtonPress={navigateToUpdateStudentProfile} icon={faEdit}/>
     </View>
   );
 };
