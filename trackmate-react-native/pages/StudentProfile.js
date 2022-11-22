@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ScrollView,
@@ -8,16 +8,21 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../components/Header";
-
 import Separator from "../components/Separator";
-import Footer from "../components/Footer";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import Button, { ButtonColor, ButtonStyle } from "../components/Button";
+
+import { deleteStudentAction } from "../state/slices/studentSlice";
+import PopupDialog from "../components/PopupDialog";
 
 const StudentProfile = () => {
   const currentStudent = useSelector((store) => store.student.currentStudent);
+  const currentClassId = useSelector((store) => store.class.currentClass.id);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
   const isLoading = !currentStudent?.firstName;
 
@@ -35,6 +40,15 @@ const StudentProfile = () => {
     navigation.navigate("UpdateStudentProfile");
   };
 
+  const deleteStudent = () => {
+    dispatch(deleteStudentAction({
+      classId: currentClassId,
+      studentId: currentStudent.id,
+    }));
+    navigation.goBack();
+    navigation.goBack();
+  }
+
   return (
     <View style={styles.root}>
       <Header
@@ -47,28 +61,63 @@ const StudentProfile = () => {
           <ActivityIndicator />
         </View>
       ) : (
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.name}>
-            {`${currentStudent?.firstName} ${currentStudent?.lastName}`}
+        <ScrollView
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexGrow: 1,
+          }}
+          style={styles.scrollView}>
+          <Text style={styles.label}>First Name</Text>
+          <Text style={styles.part}>
+            {currentStudent?.firstName}
           </Text>
-          <Text style={{ fontSize: 14, paddingVertical: 5 }}>
-            {`${capitalize(currentStudent?.gender)} | ${calculateAge(
-              currentStudent?.dob
-            )} y.o.`}
-          </Text>
+          <Separator height={20} />
+          <Text style={styles.label}>Last Name</Text>
+          <Text style={styles.part}>{currentStudent?.lastName}</Text>
+          <Separator height={20} />
+          <Text style={styles.label}>Gender</Text>
+          <Text style={styles.part}>{capitalize(currentStudent?.gender)}</Text>
+          <Separator height={20} />
+          <Text style={styles.label}>Age</Text>
+          <Text style={styles.part}>{calculateAge(currentStudent?.dob)} y.o</Text>
           <Separator height={40} />
-          <Text style={{ fontSize: 16 }}>Guardian information:</Text>
+          <Text style={styles.bigLabel}>Guardian information</Text>
+          <Separator height={20} />
+          <Text style={styles.label}>Guardian's number</Text>
           <Text>
             {currentStudent?.guardianNumber ||
-              "Guardian number not yet registered"}
+              "Not registered yet"}
           </Text>
+          <Separator height={20} />
+          <Text style={styles.label}>Guardian's email</Text>
           <Text>
             {currentStudent?.guardianEmail ||
-              "Guardian email not yet registered"}
+              "Not registered yet"}
           </Text>
+          <Separator height={40} />
+          <Button
+            title="Update Information"
+            icon={faEdit}
+            buttonStyle={ButtonStyle.TRANSPARENT}
+            onPress={navigateToUpdateStudentProfile} />
+          <Separator height={10} />
+          <Button
+            title="Delete Student"
+            onPress={() => setVisible(true)}
+            buttonStyle={ButtonStyle.TRANSPARENT}
+            buttonColor={ButtonColor.DANGER}
+            icon={faTrash} />
         </ScrollView>
       )}
-      <Footer onActionButtonPress={navigateToUpdateStudentProfile} icon={faEdit}/>
+      <PopupDialog
+        visible={visible}
+        onOkPressed={deleteStudent}
+        onCancelPressed={() => setVisible(false)}
+        title="Delete Student"
+        okButtonTitle="Delete"
+        actionButtonColor={ButtonColor.DANGER}
+        description="Deletes the student permanently, proceed with extreme caution!" />
     </View>
   );
 };
@@ -78,7 +127,14 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "white",
   },
-  name: {
+  label: {
+    fontSize: 13,
+    color: "gray"
+  },
+  bigLabel: {
+    fontSize: 20
+  },
+  part: {
     fontSize: 25,
   },
   loading: {

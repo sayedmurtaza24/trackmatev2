@@ -22,6 +22,11 @@ export const ButtonSize = Object.freeze({
   SMALL: "small",
 });
 
+export const ButtonColor = Object.freeze({
+  NORMAL: "#187dc9",
+  DANGER: "#c20606"
+});
+
 export default function Button({
   onPress,
   title,
@@ -30,13 +35,14 @@ export default function Button({
   buttonStyle = ButtonStyle.SOLID,
   buttonShape = ButtonShape.RECTANGULAR,
   buttonSize = ButtonSize.NORMAL,
+  buttonColor = ButtonColor.NORMAL,
   width,
   height,
 }) {
-  const textIconColor = buttonStyle === ButtonStyle.SOLID ? "white" : "#187dc9";
+  const textIconColor = buttonStyle === ButtonStyle.SOLID ? "white" : buttonColor;
   const highlightColor =
     buttonStyle === ButtonStyle.SOLID ? "#3297e3" : "#ececec";
-  const bgColor = buttonStyle === ButtonStyle.SOLID ? "#187dc9" : "transparent";
+  const bgColor = buttonStyle === ButtonStyle.SOLID ? buttonColor : "transparent";
 
   return (
     <TouchableHighlight
