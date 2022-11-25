@@ -29,13 +29,22 @@ export const createStudentAction = createAsyncThunk(
 //add one student
 export const updateStudentAction = createAsyncThunk(
   "updateStudent",
-  async ({ studentId, name, dob, gender, phone, email }) => {
+  async ({
+    studentId,
+    firstName,
+    lastName,
+    dob,
+    gender,
+    guardianEmail,
+    guardianNumber,
+  }) => {
     return await studentBloc.updateStudent(studentId, {
-      name,
+      firstName,
+      lastName,
       dob,
       gender,
-      phone,
-      email,
+      guardianEmail,
+      guardianNumber,
     });
   }
 );

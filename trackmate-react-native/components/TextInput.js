@@ -12,7 +12,7 @@ const Input = ({ label, onChangeText, value, placeholder, required, type = Input
             case InputType.TEXT:
                 return onChangeText(text);
             case InputType.NUMERIC:
-                return onChangeText(Number(text.replace(/[^0-9]/g, '')));
+                return onChangeText(Number(text.replace(/[^0-9+]/g, '')));
             default:
                 break;
         }

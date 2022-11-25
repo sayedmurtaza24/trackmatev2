@@ -93,34 +93,40 @@ const StudentPage = () => {
               );
             })}
           </View>
-          {sortAssessmentByDate(currentStudent?.assessments)?.map(
-            (assessment) => {
-              return (
-                <View key={assessment.date} style={styles.assessmentField}>
-                  <DateTile date={assessment.date} />
-                  {assessment?.fields?.map((f, i) => {
-                    return (
-                      <AssessmentTile
-                        onPress={() => {
-                          setSelectedAssessmentF({
-                            ...f,
-                            valueRange: findValueRange(f.name),
-                            index: i,
-                          });
-                          dispatch(selectAssessment(assessment));
-                        }}
-                        key={f.name}
-                        value={f.value}
-                        valueRange={findValueRange(f.name)}
-                      />
-                    );
-                  })}
-                </View>
-              );
-            }
-          )}
+          {!!currentStudent?.assessments?.length &&
+            sortAssessmentByDate(currentStudent?.assessments)?.map(
+              (assessment) => {
+                return (
+                  <View key={assessment.date} style={styles.assessmentField}>
+                    <DateTile date={assessment.date} />
+                    {assessment?.fields?.map((f, i) => {
+                      return (
+                        <AssessmentTile
+                          onPress={() => {
+                            setSelectedAssessmentF({
+                              ...f,
+                              valueRange: findValueRange(f.name),
+                              index: i,
+                            });
+                            dispatch(selectAssessment(assessment));
+                          }}
+                          key={f.name}
+                          value={f.value}
+                          valueRange={findValueRange(f.name)}
+                        />
+                      );
+                    })}
+                  </View>
+                );
+              }
+            )}
         </ScrollView>
       </ScrollView>
+      {!currentStudent?.assessments && (
+        <View style={styles.instruction}>
+          <Text>Student assessments will show up here.</Text>
+        </View>
+      )}
       <Separator height={80} />
       <AssessmentComment
         visible={!!selectedAssessmentF}
@@ -170,6 +176,12 @@ const styles = StyleSheet.create({
   assessmentField: {
     display: "flex",
     flexDirection: "row",
+  },
+  instruction: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 16,
   },
 });
 

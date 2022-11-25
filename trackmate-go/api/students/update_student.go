@@ -12,7 +12,7 @@ type UpdateStudentSchemaI struct {
 	Dob            string `json:"dob"`
 	Gender         string `json:"gender" validate:"required,alpha,min=2,max=10"`
 	GuardianEmail  string `json:"guardianEmail" validate:"email"`
-	GuardianNumber string `json:"guardianNo" validate:"e164"`
+	GuardianNumber string `json:"guardianNumber" validate:"e164"`
 }
 
 func (h StudentHandler) handleUpdateStudent(c *fiber.Ctx) error {

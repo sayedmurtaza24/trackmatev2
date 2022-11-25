@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Button, { ButtonStyle, ButtonSize, ButtonShape } from "./Button";
 import { faTimes, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Separator from "./Separator";
@@ -37,11 +37,13 @@ const AssessmentComment = ({
         </View>
       </View>
       <Separator height={10} />
-      <Text>
-        Value: {value}/{valueRange}
-      </Text>
-      <Separator height={20} />
-      <Text>Comment: {comment}</Text>
+      <ScrollView>
+        <Text>
+          Value: {value}/{valueRange}
+        </Text>
+        <Separator height={20} />
+        <Text>Comment: {comment}</Text>
+      </ScrollView>
       <Separator height={20} />
     </View>
   ) : (
@@ -64,6 +66,7 @@ const styles = StyleSheet.create({
     bottom: 80,
     left: 10,
     right: 10,
+    maxHeight: "40%",
   },
   header: {
     display: "flex",
